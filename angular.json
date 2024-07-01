@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "shuffll-frontend": {
+    "wafflle-video-editor": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/shuffll-frontend",
+            "outputPath": "dist/wafflle-video-editor",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -75,18 +75,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "shuffll-frontend:build"
+            "buildTarget": "wafflle-video-editor:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "shuffll-frontend:build:production"
+              "buildTarget": "wafflle-video-editor:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "shuffll-frontend:build"
+            "buildTarget": "wafflle-video-editor:build"
           }
         },
         "test": {
@@ -124,13 +124,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "shuffll-frontend:serve"
+            "devServerTarget": "wafflle-video-editor:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "shuffll-frontend:serve:production"
+              "devServerTarget": "wafflle-video-editor:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
