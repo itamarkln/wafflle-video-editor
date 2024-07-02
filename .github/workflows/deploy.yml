@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write # Ensure the token has write permissions
+
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
