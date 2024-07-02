@@ -28,6 +28,7 @@ a {
 
   &:hover {
     color: $accent-color;
+    cursor: pointer;
     @include transition(color, 0.3s);
   }
 }
