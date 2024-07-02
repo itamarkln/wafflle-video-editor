@@ -5,9 +5,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   selector: 'app-video-editor',
   standalone: true,
   imports: [MatToolbarModule],
-  templateUrl: './video-editor.component.html',
-  styleUrl: './video-editor.component.scss'
+  templateUrl: './video-editor.page.html',
+  styleUrl: './video-editor.page.scss'
 })
-export class VideoEditorComponent {
+export class VideoEditorPageComponent {
 
 }

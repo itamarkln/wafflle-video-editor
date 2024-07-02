@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from '@layout/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from '@pages/page-not-found/page-not-found.page';
 
 const routes: Routes = [
   {
     path: 'video-editor',
-    loadComponent: () => import('@features/video-editor/video-editor.component').then((m) => m.VideoEditorComponent)
+    loadComponent: () => import('@pages/video-editor/video-editor.page').then((m) => m.VideoEditorPageComponent)
   },
   { path: '', redirectTo: 'video-editor', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

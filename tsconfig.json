@@ -10,6 +10,7 @@
       "@features/*": ["app/features/*"],
       "@shared/*": ["app/shared/*"],
       "@components/*": ["app/shared/components/*"],
+      "@pages/*": ["app/pages/*"],
       "@modules/*": ["app/modules/*"],
       "@styles/*": ["styles/*"],
       "@env/*": ["environments/*"]
