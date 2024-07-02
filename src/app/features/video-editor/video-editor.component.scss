@@ -1,0 +1,12 @@
+@import "colors";
+
+.toolbar__controls {
+  .button-round {
+    color: $gray-dark;
+    background-color: $gray-light;
+
+    &:hover {
+      background-color: $gray-medium;
+    }
+  }
+}
