@@ -1,5 +1,76 @@
+@import "variables";
+
+$spacing-map: (
+  0: 0,
+  1: $spacing-small,
+  2: $spacing-medium,
+  3: $spacing-large,
+  4: $spacing-xlarge,
+);
+
 @mixin flex-center {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+}
+
+@mixin responsive-font-size($size) {
+  font-size: $size;
+
+  @media (min-width: 576px) {
+    font-size: $size * 1.1;
+  }
+
+  @media (min-width: 768px) {
+    font-size: $size * 1.2;
+  }
+}
+
+@mixin transition($property, $duration, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+@mixin box-shadow(
+  $color: rgba(0, 0, 0, 0.1),
+  $x: 0px,
+  $y: 2px,
+  $blur: 4px,
+  $spread: 0px
+) {
+  box-shadow: $x $y $blur $spread $color;
+}
+
+@mixin spacing-utilities($spacing-map) {
+  @each $name, $size in $spacing-map {
+    .m-#{$name} {
+      margin: $size !important;
+    }
+    .mt-#{$name} {
+      margin-top: $size !important;
+    }
+    .mr-#{$name} {
+      margin-right: $size !important;
+    }
+    .mb-#{$name} {
+      margin-bottom: $size !important;
+    }
+    .ml-#{$name} {
+      margin-left: $size !important;
+    }
+    .p-#{$name} {
+      padding: $size !important;
+    }
+    .pt-#{$name} {
+      padding-top: $size !important;
+    }
+    .pr-#{$name} {
+      padding-right: $size !important;
+    }
+    .pb-#{$name} {
+      padding-bottom: $size !important;
+    }
+    .pl-#{$name} {
+      padding-left: $size !important;
+    }
+  }
 }
