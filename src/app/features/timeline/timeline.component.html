@@ -1,1 +1,22 @@
-<p>timeline works!</p>
+<div class="timeline">
+  <div class="ruler">
+    @for (tick of ticks(); track i; let i = $index) {
+    <div class="tick">{{ i + 1 }}s</div>
+    }
+  </div>
+  <div
+    id="timeline-track"
+    class="track"
+    cdkDropList
+    [cdkDropListData]="timelineScenes()"
+    (cdkDropListDropped)="dropped($event)"
+  >
+    @for (scene of timelineScenes(); track scene.id) {
+    <div class="scene-block" cdkDrag>
+      {{ scene.title }} ({{ scene.duration }}s)
+    </div>
+    } @empty {
+    <div class="empty-state">No scenes were selected yet</div>
+    }
+  </div>
+</div>
