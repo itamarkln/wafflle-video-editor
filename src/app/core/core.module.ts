@@ -1,17 +1,10 @@
 import { NgModule } from '@angular/core';
-import { FooterComponent } from '@layout/footer/footer.component';
-import { HeaderComponent } from '@layout/header/header.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [],
-  imports: [
-    HeaderComponent,
-    FooterComponent
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent
-  ],
+  imports: [SidebarComponent],
+  exports: [SidebarComponent],
   providers: []
 })
 export class CoreModule { }
