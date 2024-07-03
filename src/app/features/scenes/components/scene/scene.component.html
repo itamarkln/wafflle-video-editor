@@ -1,9 +1,11 @@
-<div class="scene">
+<div class="scene" cdkDrag>
   <div class="scene__content">
-    <h4 class="scene__title">{{ scene.title }}</h4>
-    <h5 class="scene__description">{{ scene.description }}</h5>
+    <h4 class="scene__title">{{ scene().title }}</h4>
+    <h5 class="scene__description">Duration: {{ scene().duration }}s</h5>
   </div>
   <div class="scene__controls">
-    <mat-icon>play_arrow</mat-icon>
+    <button mat-icon-button>
+      <mat-icon>play_arrow</mat-icon>
+    </button>
   </div>
 </div>

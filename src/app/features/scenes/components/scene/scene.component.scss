@@ -3,14 +3,14 @@
 
 .scene {
   @include flex-between;
+  align-items: center;
   margin: 1rem auto;
   padding: 1rem;
-  background-color: #343434;
+  background-color: #2b2c31;
   border-radius: 10px;
+  cursor: grab;
 
   .scene__content {
-    // cursor: move;
-
     .scene__title,
     .scene__description {
       margin: 0;
@@ -21,10 +21,12 @@
     }
     .scene__description {
       font-weight: $font-weight-light;
+      color: #c2bec7;
     }
   }
 
   .scene__controls {
+    cursor: pointer;
   }
 }
 
