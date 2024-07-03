@@ -1,0 +1,31 @@
+@import "mixins";
+@import "colors";
+@import "variables";
+
+h1 {
+  padding: 0 1rem;
+}
+
+h2 {
+  padding: 1rem;
+}
+
+mat-toolbar {
+  position: relative;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+}
+
+mat-sidenav-container {
+  height: 100vh;
+
+  mat-sidenav {
+    background-color: #171717;
+  }
+
+  mat-sidenav,
+  mat-sidenav-content {
+    @include transition(all, 0.3s);
+  }
+}
