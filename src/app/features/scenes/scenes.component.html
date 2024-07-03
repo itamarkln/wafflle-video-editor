@@ -1,9 +1,18 @@
-@for (scene of scenes; track scene.id) {
-    <div class="scene">
-        <div class="scene__content">
-            <div class="scene__title">scene</div>
-            <div class="scene__desceiption"></div>
-            <div class="scene__controls"></div>
-        </div>
+<div class="container flex-between">
+  <div class="scenes__list">
+    <div class="scenes__list__title">
+      <h4>All Scenes</h4>
     </div>
-}
+    <div class="scenes__list__items">
+      @for (scene of scenes; track scene.id) {
+      <div class="scene__item">
+        <app-scene [scene]="scene"></app-scene>
+      </div>
+      } @empty {
+      <div class="no-scenes">no scenes yet!</div>
+      }
+    </div>
+  </div>
+
+  <app-scene-preview></app-scene-preview>
+</div>
