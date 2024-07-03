@@ -3,9 +3,14 @@
     <div class="scenes__list__title">
       <h4>All Scenes</h4>
     </div>
-    <div class="scenes__list__items">
+    <div
+      class="scenes__list__items"
+      cdkDropList
+      [cdkDropListConnectedTo]="['timeline-track']"
+      [cdkDropListData]="scenes"
+    >
       @for (scene of scenes; track scene.id) {
-        <app-scene [scene]="scene"></app-scene>
+      <app-scene [scene]="scene"></app-scene>
       } @empty {
       <div class="no-scenes">no scenes yet!</div>
       }

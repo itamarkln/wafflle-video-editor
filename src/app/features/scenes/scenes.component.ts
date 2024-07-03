@@ -1,3 +1,4 @@
+import { CdkDragDrop, DragDropModule, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ScenePreviewComponent } from './components/scene-preview/scene-preview.component';
@@ -8,7 +9,7 @@ import { ScenesService } from './services/scenes.service';
 @Component({
   selector: 'app-scenes',
   standalone: true,
-  imports: [SceneComponent, ScenePreviewComponent],
+  imports: [DragDropModule, SceneComponent, ScenePreviewComponent],
   templateUrl: './scenes.component.html',
   styleUrl: './scenes.component.scss'
 })
