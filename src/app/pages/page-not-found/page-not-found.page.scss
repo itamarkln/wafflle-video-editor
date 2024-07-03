@@ -5,8 +5,6 @@
 .not-found {
   @include flex-center;
   height: 100vh;
-  background-color: $gray-light;
-  color: $gray-dark;
 
   &__content {
     text-align: center;
