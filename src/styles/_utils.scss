@@ -1,3 +1,5 @@
+@import 'mixins';
+
 // Spacing Utilities
 @include spacing-utilities($spacing-map);
 
@@ -41,8 +43,24 @@
 }
 
 // Flex Utilities
+.flex-row {
+  @include flex-row;
+}
+
+.flex-column {
+  @include flex-column;
+}
+
 .flex-center {
   @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-around {
+  @include flex-around;
 }
 
 // Overflow Utilities
