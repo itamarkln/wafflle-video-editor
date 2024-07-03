@@ -1,0 +1,29 @@
+<div class="sidenav">
+  <div class="sidenav__header">
+    <img
+      [width]="logoPicSize()"
+      [height]="logoPicSize()"
+      src="assets/image.png"
+      alt="sidenav-header"
+    />
+  </div>
+  <div class="sidenav__content">
+    <mat-nav-list>
+      @for (menuItem of menuItems(); track menuItem.route) {
+      <a
+        mat-list-item
+        [routerLink]="menuItem.route"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [activated]="rla.isActive"
+      >
+        <mat-icon matListItemIcon>{{ menuItem.icon }}</mat-icon>
+        <span matListItemTitle>{{ menuItem.label }}</span>
+      </a>
+      }
+    </mat-nav-list>
+    <button mat-mini-fab class="menu-btn" (click)="toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</div>
