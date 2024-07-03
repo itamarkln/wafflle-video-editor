@@ -1,1 +1,12 @@
-<p>scene-preview works!</p>
+<div class="scene__preview">
+  <div class="scene__preview__title">
+    <h4>Preview</h4>
+  </div>
+  <div class="scene__preview__player">
+    @if (scene) {
+    <video [src]="scene.url" controls></video>
+    } @else {
+    <img src="assets/emptyState.jpg" alt="no-scene-selected" />
+    }
+  </div>
+</div>
