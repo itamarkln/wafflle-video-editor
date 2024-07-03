@@ -1,20 +1,29 @@
-.scene__content {
-  padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  // cursor: move;
-  background: white;
-  font-size: 14px;
+@import "mixins";
+@import "variables";
 
-  .scene__title {
+.scene {
+  @include flex-between;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: #343434;
+  border-radius: 10px;
+
+  .scene__content {
+    // cursor: move;
+
+    .scene__title,
+    .scene__description {
+      margin: 0;
+    }
+
+    .scene__title {
+      font-weight: $font-weight-base;
+    }
+    .scene__description {
+      font-weight: $font-weight-light;
+    }
   }
-  .scene__description {
-  }
+
   .scene__controls {
   }
 }

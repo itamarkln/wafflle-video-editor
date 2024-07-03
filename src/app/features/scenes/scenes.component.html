@@ -5,9 +5,7 @@
     </div>
     <div class="scenes__list__items">
       @for (scene of scenes; track scene.id) {
-      <div class="scene__item">
         <app-scene [scene]="scene"></app-scene>
-      </div>
       } @empty {
       <div class="no-scenes">no scenes yet!</div>
       }
