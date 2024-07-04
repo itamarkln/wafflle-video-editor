@@ -1,22 +1,23 @@
-<div class="container flex-between">
-  <div class="scenes__list">
-    <div class="scenes__list__title">
-      <h4>All Scenes</h4>
-    </div>
-    <div
-      id="scenes"
-      class="scenes__list__items"
-      cdkDropList
-      [cdkDropListConnectedTo]="['timeline-tracks']"
-      [cdkDropListData]="scenes"
-    >
-      @for (scene of scenes; track scene.id) {
-      <app-scene [scene]="scene"></app-scene>
-      } @empty {
-      <div class="no-scenes">no scenes yet!</div>
-      }
-    </div>
+<div class="scenes__list">
+  <div class="scenes__list__title">
+    <h4>All Scenes</h4>
   </div>
-
-  <app-scene-preview></app-scene-preview>
+  <div
+    id="scenes"
+    class="scenes__list__items"
+    cdkDropList
+    [cdkDropListConnectedTo]="['timeline-tracks']"
+    [cdkDropListData]="scenes"
+  >
+    @for (scene of scenes; track scene.id) {
+    <app-scene
+      [scene]="scene"
+      [isPlaying]="playingScene?.id === scene.id"
+      (play)="handleScenePlay(scene)"
+      (pause)="handleScenePause(scene)"
+    ></app-scene>
+    } @empty {
+    <div class="no-scenes">no scenes yet!</div>
+    }
+  </div>
 </div>
