@@ -24,6 +24,10 @@ mat-sidenav-container {
     background-color: #171717;
   }
 
+  mat-sidenav-content {
+    padding: 2px;
+  }
+
   mat-sidenav,
   mat-sidenav-content {
     @include transition(all, 0.3s);

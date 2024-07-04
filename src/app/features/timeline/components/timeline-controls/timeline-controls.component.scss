@@ -1,0 +1,8 @@
+@import "mixins";
+
+.timeline__controls {
+  @include flex-between;
+
+  background-color: $dark;
+  border: 3px solid $accent-color;
+}

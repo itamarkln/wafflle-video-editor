@@ -1,0 +1,23 @@
+<div
+  #track
+  id="timeline-tracks"
+  class="tracks"
+  cdkDropList
+  [cdkDropListData]="tracks()"
+  (cdkDropListDropped)="dropped($event)"
+>
+  @for (scene of tracks(); track scene.id; let i = $index) {
+  <div
+    class="track"
+    cdkDrag
+    [style]="{
+      'left.px': calculateTrackLeftOffset(i),
+      'width.px': calculateTrackWidth(scene)
+    }"
+  >
+    {{ scene.title }} ({{ scene.duration }}s)
+  </div>
+  } @empty {
+  <div class="empty-state">No scenes were selected yet</div>
+  }
+</div>

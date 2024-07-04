@@ -2,38 +2,13 @@
 @import "variables";
 
 .timeline {
-  width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-}
-
-.ruler {
-  display: flex;
-  justify-content: space-between;
-  font-size: $font-size-small;
   width: 100%;
-  padding: 0.25rem 0;
-  border-radius: 6px;
-  color: #c2bec7;
-  background-color: #2b2c31;
-}
 
-.tick {
-  flex: 1;
-  text-align: center;
-}
-
-.track {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  background-color: $primary-color;
-}
-
-.scene-block {
-  margin: 1rem auto;
-  padding: 1rem;
-  background-color: #2b2c31;
-  border-radius: 10px;
+  .timeline__content {
+    position: relative;
+  }
 }

@@ -1,32 +1,32 @@
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { Component, InputSignal, Signal, computed, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { IScene } from '../scenes/components/scene/interfaces/scene.interface';
+import { TimelineControlsComponent } from './components/timeline-controls/timeline-controls.component';
+import { TimelineCursorComponent } from './components/timeline-cursor/timeline-cursor.component';
+import { TimelineRulerComponent } from './components/timeline-ruler/timeline-ruler.component';
+import { TimelineTrackComponent } from './components/timeline-track/timeline-track.component';
 
 @Component({
   selector: 'app-timeline',
   standalone: true,
-  imports: [DragDropModule],
+  imports: [
+    TimelineControlsComponent,
+    TimelineRulerComponent,
+    TimelineTrackComponent,
+    TimelineCursorComponent
+  ],
   templateUrl: './timeline.component.html',
   styleUrl: './timeline.component.scss'
 })
 export class TimelineComponent {
-  scenes: InputSignal<IScene[]> = input<IScene[]>([]);
-  timelineScenes: Signal<IScene[]>;
-  ticks: Signal<number[]>;
+  timelineTracks: IScene[];
+  currentTime: number;
 
   constructor() {
-    this.timelineScenes = computed(() => this.scenes());
-    this.ticks = computed(() => {
-      const totalDurationInS = this.timelineScenes().reduce((acc: number, scene: IScene) => acc + scene.duration, 0);
-      return Array(totalDurationInS);
-    });
+    this.timelineTracks = [];
+    this.currentTime = 0;
   }
 
-  dropped(event: CdkDragDrop<IScene[]>) {
-    const droppedScene = event.previousContainer.data.find((_, index) => index === event.previousIndex);
-    droppedScene && this.timelineScenes().push(droppedScene);
-
-    // const currTimelineScenes = event.container.data;
-    console.log(droppedScene, this.timelineScenes());
+  handleTracksUpdated(currentTracks: IScene[]) {
+    this.timelineTracks = currentTracks;
   }
 }
