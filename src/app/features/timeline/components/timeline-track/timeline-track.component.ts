@@ -1,6 +1,6 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OutputEmitterRef, WritableSignal, output, signal } from '@angular/core';
-import { IScene } from '@app/features/scenes/components/scene/interfaces/scene.interface';
+import { IScene } from '@app/shared/entities/scene/scene.interface';
 
 @Component({
   selector: 'app-timeline-track',

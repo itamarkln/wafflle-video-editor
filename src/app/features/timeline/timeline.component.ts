@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IScene } from '../scenes/components/scene/interfaces/scene.interface';
+import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { TimelineControlsComponent } from './components/timeline-controls/timeline-controls.component';
 import { TimelineCursorComponent } from './components/timeline-cursor/timeline-cursor.component';
 import { TimelineRulerComponent } from './components/timeline-ruler/timeline-ruler.component';

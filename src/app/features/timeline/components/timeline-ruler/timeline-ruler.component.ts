@@ -1,5 +1,5 @@
 import { Component, InputSignal, Signal, computed, input } from '@angular/core';
-import { IScene } from '@app/features/scenes/components/scene/interfaces/scene.interface';
+import { IScene } from '@app/shared/entities/scene/scene.interface';
 
 @Component({
   selector: 'app-timeline-ruler',
