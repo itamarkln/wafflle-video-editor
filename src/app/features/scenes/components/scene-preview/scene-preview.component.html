@@ -3,10 +3,14 @@
     <h4>Preview</h4>
   </div>
   <div class="scene__preview__player">
-    @if (scene) {
-    <video [src]="scene.url" controls></video>
+    @if (scenes.length > 0) {
+    <video id="video-player" class="video-js vjs-default-skin" controls></video>
     } @else {
-    <img class="empty-state" src="assets/emptyState.jpg" alt="no-scene-selected" />
+    <img
+      class="empty-state"
+      src="assets/emptyState.jpg"
+      alt="no-scene-selected"
+    />
     }
   </div>
 </div>

@@ -5,6 +5,7 @@ import { ScenesComponent } from '@app/features/scenes/scenes.component';
 import { TimelineComponent } from '@app/features/timeline/timeline.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { IScene } from '@app/shared/entities/scene/scene.interface';
 
 @Component({
   selector: 'app-video-editor',
@@ -21,5 +22,9 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './video-editor.page.scss'
 })
 export class VideoEditorPageComponent {
+  scenesToPreview: IScene[];
 
+  constructor() {
+    this.scenesToPreview = [];
+  }
 }

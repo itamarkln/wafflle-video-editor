@@ -6,6 +6,9 @@
   </div></mat-toolbar
 >
 
-<app-scenes></app-scenes>
+<div class="container flex-between">
+  <app-scenes></app-scenes>
+  <app-scene-preview [scenes]="scenesToPreview"></app-scene-preview>
+</div>
 
 <app-timeline></app-timeline>
