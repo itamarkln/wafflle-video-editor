@@ -1,11 +1,17 @@
-<div class="scene" cdkDrag [cdkDragData]="scene()">
+<div class="scene" cdkDrag [cdkDragData]="scene">
   <div class="scene__content">
-    <h4 class="scene__title">{{ scene().title }}</h4>
-    <h5 class="scene__description">Duration: {{ scene().duration }}s</h5>
+    <h4 class="scene__title">{{ scene.title }}</h4>
+    <h5 class="scene__description">Duration: {{ scene.duration }}s</h5>
   </div>
   <div class="scene__controls">
-    <button mat-icon-button>
+    @if (!isPlaying) {
+    <button mat-icon-button (click)="onPlay()">
       <mat-icon>play_arrow</mat-icon>
     </button>
+    } @else {
+    <button mat-icon-button (click)="onPause()">
+      <mat-icon>pause</mat-icon>
+    </button>
+    }
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { Observable, of } from 'rxjs';
-import { IScene } from '../components/scene/interfaces/scene.interface';
+import { map } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
 import SCENES from '../data/scenes.data.json';
 
 @Injectable({
@@ -14,6 +16,11 @@ export class ScenesService {
   }
 
   public getScenes(): Observable<IScene[]> {
-    return of(this._scenes);
+    // generate unique scenes ids
+
+    return of(this._scenes)
+      .pipe(map((scenes: IScene[]) => {
+        return scenes.map((scene: IScene) => ({ ...scene, id: uuid() }))
+      }));
   }
 }

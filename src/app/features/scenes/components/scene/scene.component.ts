@@ -1,9 +1,9 @@
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { Component, InputSignal, input } from '@angular/core';
+import { Component, Input, InputSignal, OutputEmitterRef, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { IScene } from './interfaces/scene.interface';
+import { IScene } from '@app/shared/entities/scene/scene.interface';
 
 @Component({
   selector: 'app-scene',
@@ -13,5 +13,20 @@ import { IScene } from './interfaces/scene.interface';
   styleUrl: './scene.component.scss'
 })
 export class SceneComponent {
-  scene: InputSignal<IScene> = input.required<IScene>();
+  @Input() public scene!: IScene;
+  @Input() public isPlaying: boolean;
+  public play: OutputEmitterRef<void> = output<void>();
+  public pause: OutputEmitterRef<void> = output<void>();
+
+  constructor() {
+    this.isPlaying = false;
+  }
+
+  onPlay() {
+    this.play.emit();
+  }
+
+  onPause() {
+    this.pause.emit();
+  }
 }
