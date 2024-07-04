@@ -4,9 +4,10 @@
       <h4>All Scenes</h4>
     </div>
     <div
+      id="scenes"
       class="scenes__list__items"
       cdkDropList
-      [cdkDropListConnectedTo]="['timeline-track']"
+      [cdkDropListConnectedTo]="['timeline-tracks']"
       [cdkDropListData]="scenes"
     >
       @for (scene of scenes; track scene.id) {
