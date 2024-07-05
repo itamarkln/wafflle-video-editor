@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ScenePreviewComponent } from '@app/features/scenes/components/scene-preview/scene-preview.component';
 import { ScenesComponent } from '@app/features/scenes/scenes.component';
@@ -23,8 +23,28 @@ import { IScene } from '@app/shared/entities/scene/scene.interface';
 })
 export class VideoEditorPageComponent {
   scenesToPreview: IScene[];
+  @ViewChild(ScenePreviewComponent) scenePreviewEl!: ScenePreviewComponent;
 
   constructor() {
     this.scenesToPreview = [];
+  }
+
+  handleScenePlay(scene: IScene) {
+    this.scenesToPreview = [scene];
+    this.scenePreviewEl.play([scene]);
+  }
+
+  handleScenePause(scene: IScene) {
+    // scene pause validation is being checked inside Scenes.Component
+    this.scenePreviewEl.pause();
+  }
+
+  handleTimelinePlay(tracks: IScene[]) {
+    this.scenesToPreview = tracks;
+    this.scenePreviewEl.play(tracks);
+  }
+
+  handleTimelinePause(tracks: IScene[]) {
+    this.scenePreviewEl.pause();
   }
 }

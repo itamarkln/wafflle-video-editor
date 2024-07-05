@@ -1,73 +1,41 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, ViewChild } from '@angular/core';
+import { VjsPlayerComponent } from '@app/shared/components/vjs-player/vjs-player.component';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
-import videojs from 'video.js';
-import Player from 'video.js/dist/types/player';
 
 @Component({
   selector: 'app-scene-preview',
   standalone: true,
-  imports: [],
+  imports: [VjsPlayerComponent],
   templateUrl: './scene-preview.component.html',
   styleUrl: './scene-preview.component.scss'
 })
-export class ScenePreviewComponent implements OnInit, OnChanges, OnDestroy {
+export class ScenePreviewComponent implements OnDestroy {
   @Input() public scenes!: IScene[];
-  @Input() public isPlaying: boolean;
-  public player?: Player;
+  @ViewChild(VjsPlayerComponent, { static: true }) private _vjsPlayer!: VjsPlayerComponent;
 
-  constructor() {
-    this.scenes = [];
-    this.isPlaying = false;
+  constructor() { }
+
+  private _convertToPlayerSource(scenes: IScene[]) {
+    return scenes.map(scene => ({
+      src: `${scene.url}?fm=hls`,
+      type: 'application/x-mpegURL'
+    }));
   }
 
-  ngOnInit() {
-    // this._initVideoJsPlayer();
-  }
+  play(scenes: IScene[]) {
+    this._vjsPlayer.player.init();
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.scenes && this.player) {
-      this._updateVideoJsPlayerPlaylist();
-    }
-  }
+    const source = this._convertToPlayerSource(scenes);
+    this._vjsPlayer.player.load(source);
 
-  private _initVideoJsPlayer() {
-    this.player = videojs('video-player', {
-      sources: [{
-        src: this.scenes.map(scene => scene.url),
-        controls: true,
-        autoplay: false,
-        type: 'video/mp4'
-      }]
-    });
-  }
-
-  private _updateVideoJsPlayerPlaylist() {
-    if (this.player) {
-      const playlist = this.scenes.map(scene => ({
-        src: scene.url,
-        type: 'video/mp4'
-      }));
-
-      // Use videojs-concat plugin to play videos sequentially
-      (this.player as any).concat(playlist);
-    }
-  }
-
-  play() {
-    if (this.player) {
-      this.player.play();
-    }
+    this._vjsPlayer.player.play();
   }
 
   pause() {
-    if (this.player) {
-      this.player.pause();
-    }
+    this._vjsPlayer.player.pause();
   }
 
   ngOnDestroy() {
-    if (this.player) {
-      this.player.dispose();
-    }
+    this._vjsPlayer.player.dispose();
   }
 }

@@ -11,7 +11,13 @@
   }
 }
 
-app-scenes {
+app-scenes,
+app-scene-preview {
+  height: 100%;
   width: 100%;
+}
+
+app-scenes {
+  max-height: 24rem;
   max-width: 24rem;
 }

@@ -1,8 +1,7 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, viewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, OutputEmitterRef, output } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { Subscription } from 'rxjs';
-import { ScenePreviewComponent } from './components/scene-preview/scene-preview.component';
 
 import { SceneComponent } from './components/scene/scene.component';
 import { ScenesService } from './services/scenes.service';
@@ -18,8 +17,8 @@ export class ScenesComponent implements OnInit, OnDestroy {
   private _subscriptions: Subscription[];
   public scenes: IScene[];
   public playingScene?: IScene;
-  @ViewChild(ScenePreviewComponent) public scenePreview!: ElementRef<ScenePreviewComponent>;
-
+  public onScenePlay: OutputEmitterRef<IScene> = output<IScene>();
+  public onScenePause: OutputEmitterRef<IScene> = output<IScene>();
 
   constructor(private scenesService: ScenesService) {
     this._subscriptions = [];
@@ -45,13 +44,13 @@ export class ScenesComponent implements OnInit, OnDestroy {
 
   handleScenePlay(scene: IScene) {
     this.playingScene = scene;
-    this.scenePreview.nativeElement.play();
+    this.onScenePlay.emit(scene);
   }
 
   handleScenePause(scene: IScene) {
     if (this.playingScene === scene) {
       this.playingScene = undefined;
-      this.scenePreview.nativeElement.pause();
+      this.onScenePause.emit(scene);
     }
   }
 

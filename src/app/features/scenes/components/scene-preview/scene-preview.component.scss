@@ -1,6 +1,22 @@
-#video-player {
+.scene__preview {
+  height: 100%;
   width: 100%;
-  height: auto;
+
+  .scene__preview__player {
+    height: auto;
+    width: 100%;
+  }
+}
+
+video#video-player {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.video-js.vjs-default-skin {
+  position: relative;
+  width: 100% !important;
+  height: auto !important;
 }
 
 img.empty-state {

@@ -7,8 +7,17 @@
 >
 
 <div class="container flex-between">
-  <app-scenes></app-scenes>
-  <app-scene-preview [scenes]="scenesToPreview"></app-scene-preview>
+  <app-scenes
+    (onScenePlay)="handleScenePlay($event)"
+    (onScenePause)="handleScenePause($event)"
+  ></app-scenes>
+  <app-scene-preview
+    #scenePreview
+    [scenes]="scenesToPreview"
+  ></app-scene-preview>
 </div>
 
-<app-timeline></app-timeline>
+<app-timeline
+  (onTimelinePlay)="handleTimelinePlay($event)"
+  (onTimelinePause)="handleTimelinePause($event)"
+></app-timeline>

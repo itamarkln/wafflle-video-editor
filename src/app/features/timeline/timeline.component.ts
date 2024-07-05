@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OutputEmitterRef, output } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { TimelineControlsComponent } from './components/timeline-controls/timeline-controls.component';
 import { TimelineCursorComponent } from './components/timeline-cursor/timeline-cursor.component';
@@ -20,6 +20,9 @@ import { TimelineTrackComponent } from './components/timeline-track/timeline-tra
 export class TimelineComponent {
   timelineTracks: IScene[];
   currentTime: number;
+
+  public onTimelinePlay: OutputEmitterRef<IScene[]> = output<IScene[]>();
+  public onTimelinePause: OutputEmitterRef<IScene[]> = output<IScene[]>();
 
   constructor() {
     this.timelineTracks = [];
