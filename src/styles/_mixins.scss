@@ -38,14 +38,25 @@ $spacing-map: (
   flex-wrap: wrap;
 }
 
+@mixin responsive-grid($columns: 1, $breakpoints: ()) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+
+  @each $breakpoint, $cols in $breakpoints {
+    @media (min-width: $breakpoint) {
+      grid-template-columns: repeat($cols, 1fr);
+    }
+  }
+}
+
 @mixin responsive-font-size($size) {
   font-size: $size;
 
-  @media (min-width: 576px) {
+  @media (min-width: $tablet-min-width) {
     font-size: $size * 1.1;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: $desktop-min-width) {
     font-size: $size * 1.2;
   }
 }

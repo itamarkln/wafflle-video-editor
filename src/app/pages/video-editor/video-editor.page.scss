@@ -1,4 +1,5 @@
 @import "colors";
+@import "mixins";
 
 .toolbar__controls {
   .button-round {
@@ -11,13 +12,36 @@
   }
 }
 
+.grid-container {
+  @include responsive-grid(
+    1,
+    (
+      $tablet-min-width: 2,
+    )
+  );
+  gap: 20px;
+  padding: 20px;
+}
+
+.container {
+  width: 90%;
+}
+
 app-scenes,
 app-scene-preview {
+  margin: 0;
+  padding: 0;
   height: 100%;
   width: 100%;
 }
 
 app-scenes {
-  max-height: 24rem;
-  max-width: 24rem;
+  // max-height: 24rem;
+  // max-width: 35%;
+}
+
+app-scene-preview {
+  // max-height: 24rem;
+  // max-width: 24rem;
+  // max-width: 55%;
 }

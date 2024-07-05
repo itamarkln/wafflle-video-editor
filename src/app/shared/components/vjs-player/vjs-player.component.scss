@@ -1,4 +1,10 @@
+.video-js {
+  width: 100%;
+  height: 100%;
+}
+
 video {
+  position: relative !important;
   height: 100%;
   width: 100%;
 }
