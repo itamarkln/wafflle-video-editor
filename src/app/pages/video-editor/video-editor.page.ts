@@ -1,10 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { ScenePreviewComponent } from '@app/features/scenes/components/scene-preview/scene-preview.component';
-import { ScenesComponent } from '@app/features/scenes/scenes.component';
-import { TimelineComponent } from '@app/features/timeline/timeline.component';
+import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ScenePreviewComponent } from '@app/features/scene-preview/scene-preview.component';
+import { ScenesComponent } from '@app/features/scenes/scenes.component';
+import { TimelineComponent } from '@app/features/timeline/timeline.component';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
 
 @Component({
