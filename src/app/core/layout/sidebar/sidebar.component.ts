@@ -30,7 +30,7 @@ export class SidebarComponent {
   constructor(private appState: AppStateService) {
     this.isCollapsed = signal(true);
     this.menuItems = signal<MenuItem[]>([
-      { icon: 'dashboard', label: 'Video Editor', route: 'video-editor' }
+      { icon: 'ondemand_video', label: 'Video Editor', route: 'video-editor' }
     ]);
 
     this.logoPicSize = computed(() => this.appState.isSidebarOpen ? '100' : '50');

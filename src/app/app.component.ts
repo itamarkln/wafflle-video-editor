@@ -9,10 +9,11 @@ import { AppStateService } from './shared/services/app-state.service';
 })
 export class AppComponent {
   title = 'Waffle-video-editor';
-
   sidebarWidth: Signal<string>;
+  contentWidth: Signal<string>;
 
   constructor(private appState: AppStateService) {
     this.sidebarWidth = computed(() => this.appState.isSidebarOpen ? SIDENAV_OPENED_WIDTH : SIDENAV_CLOSED_WIDTH);
+    this.contentWidth = computed(() => `calc(100vw - ${this.sidebarWidth()})`);
   }
 }

@@ -23,6 +23,28 @@ body {
   box-sizing: border-box;
 }
 
+/* Styling the scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+/* Styling the track */
+::-webkit-scrollbar-track {
+  background: $accent-color; /* Color of the track */
+  border-radius: 10px; /* Optional rounded corners */
+}
+
+/* Styling the handle */
+::-webkit-scrollbar-thumb {
+  background: $accent-light; /* Color of the handle */
+  border-radius: 10px; /* Optional rounded corners */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the handle when hovered */
+}
+
 a {
   color: $primary-color;
   text-decoration: none;
