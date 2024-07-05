@@ -1,11 +1,11 @@
 import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
-import 'videojs-concat';
+import '@videojs/plugin-concat';
 import { MediaPlayer } from './media-player.abstract.entity';
 
 export class VjsMediaPlayer extends MediaPlayer {
     private _targetElement: HTMLVideoElement | HTMLAudioElement;
-    protected player: VideoJsPlayer;
-    protected options: VideoJsPlayerOptions;
+    protected player!: VideoJsPlayer;
+    protected options!: VideoJsPlayerOptions;
 
     constructor(targetElement: HTMLVideoElement | HTMLAudioElement) {
         super();
@@ -16,7 +16,6 @@ export class VjsMediaPlayer extends MediaPlayer {
         return {
             controls: true,
             autoplay: true,
-            type: 'video/mp4',
             controlBar: {
                 playToggle: true,
                 volumePanel: {
@@ -45,6 +44,35 @@ export class VjsMediaPlayer extends MediaPlayer {
         }
     }
 
+    public load(source: videojs.Tech.SourceObject[]): void {
+        try {
+            if (this.player) {
+                console.log('loading src');
+                
+                const manifests = source.map(source => ({ url: source.src, mimeType: source.type }));
+                (this.player as any).concat({
+                    manifests,
+                    targetVerticalResolution: 720,
+                    callback: (err: any, result: any) => {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log(result);
+                        this.player.src({
+                            src: `data:application/vnd.videojs.vhs+json,${JSON.stringify(
+                                result.manifestObject
+                            )}`,
+                            type: "application/vnd.videojs.vhs+json",
+                        });
+                    },
+                });
+            }
+        } catch (error) {
+            console.log('Entered load.func [catch]');
+            this.handleError(error);
+        }
+    }
+
     public play(): void {
         try {
             if (this.player) {
@@ -60,14 +88,6 @@ export class VjsMediaPlayer extends MediaPlayer {
             if (this.player) {
                 this.player.pause();
             }
-        } catch (error) {
-            this.handleError(error);
-        }
-    }
-
-    public load(source: { src: string; type: string }[]): void {
-        try {
-            (this.player as any).concat(source);
         } catch (error) {
             this.handleError(error);
         }
