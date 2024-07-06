@@ -3,13 +3,11 @@ import '@videojs/plugin-concat';
 import { MediaPlayer } from './media-player.abstract.entity';
 
 export class VjsMediaPlayer extends MediaPlayer {
-    private _targetElement: HTMLVideoElement | HTMLAudioElement;
     protected player!: VideoJsPlayer;
     protected options!: VideoJsPlayerOptions;
 
-    constructor(targetElement: HTMLVideoElement | HTMLAudioElement) {
+    constructor() {
         super();
-        this._targetElement = targetElement;
     }
 
     private get _defaultOptions(): VideoJsPlayerOptions {
@@ -31,11 +29,11 @@ export class VjsMediaPlayer extends MediaPlayer {
         };
     }
 
-    public init(options?: VideoJsPlayerOptions): void {
+    public init(target: HTMLVideoElement | HTMLAudioElement, options?: VideoJsPlayerOptions): void {
         try {
             if (!this.player) {
                 const playerOptions = Object.assign(this._defaultOptions, options);
-                this.player = videojs(this._targetElement, playerOptions, () => {
+                this.player = videojs(target, playerOptions, () => {
                     console.log('onPlayerReady', this);
                 });
             }
@@ -48,7 +46,12 @@ export class VjsMediaPlayer extends MediaPlayer {
         try {
             if (this.player) {
                 console.log('loading src');
-                
+
+                if (source.length == 1) {
+                    this.player.src(source[0].src);
+                    return;
+                }
+
                 const manifests = source.map(source => ({ url: source.src, mimeType: source.type }));
                 (this.player as any).concat({
                     manifests,
