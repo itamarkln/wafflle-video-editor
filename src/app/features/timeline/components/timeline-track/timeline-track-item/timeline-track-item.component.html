@@ -1,0 +1,13 @@
+<div
+  class="track__item"
+  cdkDrag
+  [style.width.px]="trackSceneWidth"
+  (window:resize)="calculateSceneWidth()"
+>
+  <span>{{ scene.title }}</span>
+  <div class="track__item__controls">
+    <button mat-icon-button (click)="handleRemoveTrackItem()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

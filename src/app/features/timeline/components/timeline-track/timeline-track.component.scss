@@ -8,19 +8,19 @@
   padding: 10px 0;
   background-color: $primary-color;
 
-  .track__item {
-    position: relative;
-    padding: 5px;
-    margin: 0 5px;
-    background-color: $accent-color;
-    border-radius: 10px;
-    line-height: 50px;
-    cursor: grab;
-  }
+  .track__content {
+    @include flex-center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
 
-  .empty-state {
-    margin: auto;
-    color: $gray-medium;
+    .empty-state {
+      @include flex-center;
+      height: 100%;
+      width: 100%;
+      margin: auto;
+      color: $gray-medium;
+    }
   }
 }
 

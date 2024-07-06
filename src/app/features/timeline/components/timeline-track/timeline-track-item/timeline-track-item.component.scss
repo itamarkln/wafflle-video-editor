@@ -1,0 +1,19 @@
+@import "mixins";
+@import "variables";
+
+.track__item {
+  @include flex-between;
+  align-items: center;
+  position: relative;
+  padding: 5px;
+  margin: 0 5px;
+  background-color: $accent-color;
+  border-radius: 10px;
+  line-height: 50px;
+  cursor: grab;
+
+  .track__item__controls {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -6,7 +6,7 @@
     id="scenes"
     class="scenes__list__items"
     cdkDropList
-    [cdkDropListConnectedTo]="['timeline-tracks']"
+    [cdkDropListConnectedTo]="['timeline-track', 'timeline-empty']"
     [cdkDropListData]="scenes"
   >
     @for (scene of scenes; track scene.id) {

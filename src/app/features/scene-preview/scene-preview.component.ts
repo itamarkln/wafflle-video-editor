@@ -33,9 +33,6 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
 
   subscribeToCurrentScenes() {
     this._scenesSubscription = this.scenePreviewService.scenes$.subscribe((scenes: IScene[]) => {
-      // const previewChanged = this._isPreviewChanged(scenes);
-      // if (previewChanged) {
-      // }
       this._currentPreview = scenes;
       const source = this._convertToPlayerSource(scenes);
       this._vjsPlayer.load(source);

@@ -1,4 +1,5 @@
 <div
+  id="timeline-track"
   class="track"
   cdkDropList
   [cdkDropListData]="track.scenes"
@@ -6,19 +7,15 @@
 >
   <div class="track__content">
     @for (scene of track.scenes; let i = $index; track i) {
-    <div
-      class="track__item"
-      cdkDrag
-      [style]="{
-        'left.px': calculateTrackSceneLeftOffset(i),
-        'width.px': calculateTrackSceneWidth(scene)
-      }"
-    >
-      {{ scene.durationInS }}
-    </div>
-
+    <app-timeline-track-item
+      [scene]="scene"
+      [timelineWidth]="timelineWidth"
+      (removeTrackItem)="handleRemoveTrackScene($event)"
+    ></app-timeline-track-item>
     } @empty {
-    <div>Empty tracks</div>
+    <div class="empty-state">
+      <h5>Empty track</h5>
+    </div>
     }
   </div>
 </div>
