@@ -10,5 +10,19 @@
 
   .timeline__content {
     position: relative;
+    height: 6rem;
+
+    .timeline__content__tracks {
+      height: 100%;
+      width: 100%;
+
+      .empty-state {
+        @include flex-center;
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        color: $gray-medium;
+      }
+    }
   }
 }

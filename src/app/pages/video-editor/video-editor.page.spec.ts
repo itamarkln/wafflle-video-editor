@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { VideoEditorPageComponent } from './video-editor.page';
 
-import { VideoEditorComponent } from './video-editor.component';
-
-describe('VideoEditorComponent', () => {
-  let component: VideoEditorComponent;
-  let fixture: ComponentFixture<VideoEditorComponent>;
+describe('VideoEditorPageComponent', () => {
+  let component: VideoEditorPageComponent;
+  let fixture: ComponentFixture<VideoEditorPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VideoEditorComponent]
+      imports: [VideoEditorPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
-    fixture = TestBed.createComponent(VideoEditorComponent);
+    fixture = TestBed.createComponent(VideoEditorPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,37 @@
 <div class="timeline">
   <app-timeline-controls></app-timeline-controls>
+
   <div class="timeline__content">
+    @if (timelineTracks.length > 0) {
     <app-timeline-ruler [timelineTracks]="timelineTracks"></app-timeline-ruler>
     <app-timeline-cursor [currentTime]="currentTime"></app-timeline-cursor>
-    <app-timeline-track (onTracksUpdated)="handleTracksUpdated($event)"></app-timeline-track>
+    }
+    <div
+      id="timeline-tracks"
+      class="timeline__content__tracks"
+      cdkDropListGroup
+      (cdkDropListDropped)="sceneDropped($event)"
+    >
+      @for (timelineTrack of timelineTracks; track timelineTrack.id) {
+      <app-timeline-track
+        [track]="timelineTrack"
+        (onTrackUpdated)="handleTrackUpdated($event)"
+      ></app-timeline-track>
+      } @empty {
+      <div class="empty-state">
+        <h5>No tracks were added yet</h5>
+      </div>
+      }
+    </div>
+    <!-- } @else {
+    <div
+      class="empty-state"
+      cdkDropList
+      #timelineEmpty="cdkDropList"
+      (cdkDropListDropped)="sceneDropped($event)"
+    >
+      No tracks were added yet
+    </div>
+    } -->
   </div>
 </div>

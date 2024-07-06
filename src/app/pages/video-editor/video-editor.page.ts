@@ -22,29 +22,19 @@ import { IScene } from '@app/shared/entities/scene/scene.interface';
   styleUrl: './video-editor.page.scss'
 })
 export class VideoEditorPageComponent {
-  scenesToPreview: IScene[];
+  sceneToPreview?: IScene;
   @ViewChild(ScenePreviewComponent) scenePreviewEl!: ScenePreviewComponent;
 
   constructor() {
-    this.scenesToPreview = [];
+    this.sceneToPreview = undefined;
   }
 
   handleScenePlay(scene: IScene) {
-    this.scenesToPreview = [scene];
-    this.scenePreviewEl.play([scene]);
+    this.sceneToPreview = scene;
+    this.scenePreviewEl.play(scene);
   }
 
   handleScenePause(scene: IScene) {
-    // scene pause validation is being checked inside Scenes.Component
-    this.scenePreviewEl.pause();
-  }
-
-  handleTimelinePlay(tracks: IScene[]) {
-    this.scenesToPreview = tracks;
-    this.scenePreviewEl.play(tracks);
-  }
-
-  handleTimelinePause(tracks: IScene[]) {
-    this.scenePreviewEl.pause();
+    this.scenePreviewEl.pause(scene);
   }
 }

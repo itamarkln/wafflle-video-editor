@@ -1,5 +1,6 @@
 import { Component, InputSignal, Signal, computed, input } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
+import { ISceneSource } from '@shared/entities/scene/scene-source.interface';
 
 @Component({
   selector: 'app-timeline-ruler',
@@ -17,7 +18,11 @@ export class TimelineRulerComponent {
   }
 
   handleTicksComputed(): number[] {
-    const totalDurationInS = this.timelineTracks().reduce((acc: number, scene: IScene) => acc + scene.duration, 0);
+    // the ruler ticks should be according to the track with the maximum total duration
+    const totalDurationInS = this.timelineTracks().reduce((maxDurationInS, track) => {
+      const trackDurationInS = track.sources.reduce((durationInS, source) => durationInS + source.durationInS, 0);
+      return Math.max(maxDurationInS, trackDurationInS);
+    }, 0)
     return Array(totalDurationInS);
   }
 }
