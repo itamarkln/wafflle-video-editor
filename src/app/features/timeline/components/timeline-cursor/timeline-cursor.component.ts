@@ -1,9 +1,10 @@
+import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-timeline-cursor',
   standalone: true,
-  imports: [],
+  imports: [CdkDrag],
   templateUrl: './timeline-cursor.component.html',
   styleUrl: './timeline-cursor.component.scss'
 })

@@ -1,7 +1,12 @@
 <div class="scene" cdkDrag [cdkDragData]="scene">
   <div class="scene__content">
-    <h4 class="scene__title">{{ scene.title }}</h4>
-    <h5 class="scene__description">Duration: {{ totalDurationInS }}s</h5>
+    <div class="scene__content__drag__handler" cdkDragHandle>
+      <mat-icon>drag_indicator</mat-icon>
+    </div>
+    <div>
+      <h4 class="scene__title">{{ scene.title }}</h4>
+      <h5 class="scene__description">Duration: {{ scene.durationInS }}s</h5>
+    </div>
   </div>
   <div class="scene__controls">
     @if (!isPlaying) {

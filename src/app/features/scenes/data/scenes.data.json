@@ -2,31 +2,19 @@
     {
         "id": "1",
         "title": "Scene 1",
-        "sources": [
-            {
-                "src": "https://content.shuffll.com/files/background-music/1.mp4",
-                "durationInS": 5
-            }
-        ]
+        "url": "https://content.shuffll.com/files/background-music/1.mp4",
+        "durationInS": 5
     },
     {
         "id": "2",
         "title": "Scene 2",
-        "sources": [
-            {
-                "src": "https://content.shuffll.com/files/background-music/2.mp4",
-                "durationInS": 5
-            }
-        ]
+        "url": "https://content.shuffll.com/files/background-music/2.mp4",
+        "durationInS": 5
     },
     {
         "id": "3",
         "title": "Scene 3",
-        "sources": [
-            {
-                "src": "https://content.shuffll.com/files/background-music/3.mp4",
-                "durationInS": 5
-            }
-        ]
+        "url": "https://content.shuffll.com/files/background-music/3.mp4",
+        "durationInS": 5
     }
 ]

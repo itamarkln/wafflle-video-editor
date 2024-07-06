@@ -6,6 +6,8 @@ import { ScenePreviewComponent } from '@app/features/scene-preview/scene-preview
 import { ScenesComponent } from '@app/features/scenes/scenes.component';
 import { TimelineComponent } from '@app/features/timeline/timeline.component';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
+import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
+import { ITrack } from '@shared/entities/track/track.interface';
 
 @Component({
   selector: 'app-video-editor',
@@ -22,19 +24,25 @@ import { IScene } from '@app/shared/entities/scene/scene.interface';
   styleUrl: './video-editor.page.scss'
 })
 export class VideoEditorPageComponent {
-  sceneToPreview?: IScene;
   @ViewChild(ScenePreviewComponent) scenePreviewEl!: ScenePreviewComponent;
 
-  constructor() {
-    this.sceneToPreview = undefined;
-  }
+  constructor(private scenePreviewService: ScenePreviewService) { }
 
   handleScenePlay(scene: IScene) {
-    this.sceneToPreview = scene;
-    this.scenePreviewEl.play(scene);
+    this.scenePreviewService.setScenes([scene]);
+    this.scenePreviewEl.play();
   }
 
   handleScenePause(scene: IScene) {
-    this.scenePreviewEl.pause(scene);
+    this.scenePreviewEl.pause();
+  }
+
+  handleTimelinePlay(track: ITrack) {
+    this.scenePreviewService.setScenes(track.scenes);
+    this.scenePreviewEl.play();
+  }
+
+  handleTimelinePause(track: ITrack) {
+    this.scenePreviewEl.pause();
   }
 }

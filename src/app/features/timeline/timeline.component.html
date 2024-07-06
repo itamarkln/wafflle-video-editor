@@ -1,18 +1,19 @@
 <div class="timeline">
-  <app-timeline-controls></app-timeline-controls>
+  <app-timeline-controls [currentTime]="currentTime" [isPlaying]="isPlaying"></app-timeline-controls>
 
   <div class="timeline__content">
-    @if (timelineTracks.length > 0) {
-    <app-timeline-ruler [timelineTracks]="timelineTracks"></app-timeline-ruler>
+    @if (timelineTracks().length > 0) {
+    <app-timeline-ruler [timelineTracks]="timelineTracks()"></app-timeline-ruler>
     <app-timeline-cursor [currentTime]="currentTime"></app-timeline-cursor>
     }
     <div
       id="timeline-tracks"
       class="timeline__content__tracks"
+      cdkDropList
       cdkDropListGroup
       (cdkDropListDropped)="sceneDropped($event)"
     >
-      @for (timelineTrack of timelineTracks; track timelineTrack.id) {
+      @for (timelineTrack of timelineTracks(); track timelineTrack.id) {
       <app-timeline-track
         [track]="timelineTrack"
         (onTrackUpdated)="handleTrackUpdated($event)"

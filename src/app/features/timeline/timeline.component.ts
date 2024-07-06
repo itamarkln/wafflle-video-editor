@@ -1,7 +1,7 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { Component, OutputEmitterRef, output } from '@angular/core';
+import { Component, OutputEmitterRef, WritableSignal, output, signal } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
-import { ISceneSource } from '@shared/entities/scene/scene-source.interface';
+import { ITrack } from '@shared/entities/track/track.interface';
 import { v4 as uuid } from 'uuid';
 import { TimelineControlsComponent } from './components/timeline-controls/timeline-controls.component';
 import { TimelineCursorComponent } from './components/timeline-cursor/timeline-cursor.component';
@@ -22,38 +22,40 @@ import { TimelineTrackComponent } from './components/timeline-track/timeline-tra
   styleUrl: './timeline.component.scss'
 })
 export class TimelineComponent {
-  timelineTracks: IScene[];
+  isPlaying: boolean;
   currentTime: number;
+  timelineTracks: WritableSignal<ITrack[]>;
 
-  public onTimelinePlay: OutputEmitterRef<IScene> = output<IScene>();
-  public onTimelinePause: OutputEmitterRef<IScene> = output<IScene>();
+  public onTimelinePlay: OutputEmitterRef<ITrack> = output<ITrack>();
+  public onTimelinePause: OutputEmitterRef<ITrack> = output<ITrack>();
 
   constructor() {
-    this.timelineTracks = [];
+    this.isPlaying = false;
     this.currentTime = 0;
+    this.timelineTracks = signal<ITrack[]>([]);
   }
 
   //#region timeline drag & drop
-  sceneDropped(event: CdkDragDrop<IScene> | any) {
-    if (this.timelineTracks.length === 0) {
-      const sceneSources = event.previousContainer.data.sources;
-      const newTrack = this.createTrack(sceneSources);
-      this.timelineTracks.push(newTrack);
+  sceneDropped(event: CdkDragDrop<IScene[]>) {
+    if (this.timelineTracks().length === 0) {
+      const droppedScene = event.previousContainer.data[event.previousIndex];
+      const newTrack = this.createTrack(droppedScene);
+      this.timelineTracks.update(tracks => [...tracks, newTrack]);
     }
     // TODO: handle multiple tracks here
   }
   //#endregion
 
-  createTrack(sources: ISceneSource[] = []): IScene {
+  createTrack(scene: IScene): ITrack {
     const trackId = uuid();
     return {
       id: trackId,
       title: `track#${trackId}`,
-      sources
+      scenes: [scene]
     };
   }
 
-  handleTrackUpdated(updatedTrack: IScene) {
-    this.timelineTracks = [updatedTrack];
+  handleTrackUpdated(updatedTrack: ITrack) {
+    this.timelineTracks.set([updatedTrack]);
   }
 }

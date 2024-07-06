@@ -8,9 +8,15 @@
   padding: 1rem;
   background-color: #2b2c31;
   border-radius: 10px;
-  cursor: grab;
 
   .scene__content {
+    display: flex;
+    align-items: center;
+
+    .scene__content__drag__handler {
+      margin-right: 1rem;
+      cursor: grab;
+    }
     .scene__title,
     .scene__description {
       margin: 0;

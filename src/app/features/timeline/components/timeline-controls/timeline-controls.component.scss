@@ -2,7 +2,20 @@
 
 .timeline__controls {
   @include flex-between;
-
+  align-items: center;
+  padding: 0 1rem;
   background-color: $dark;
   border: 3px solid $accent-color;
+
+  .timeline__controls_time {
+    h5 {
+      margin: auto 0;
+    }
+  }
+
+  .timeline__controls_main {
+  }
+
+  .timeline__controls_secondary {
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -10,5 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './timeline-controls.component.scss'
 })
 export class TimelineControlsComponent {
+  @Input() currentTime!: number;
+  @Input() isPlaying!: boolean;
 
+  constructor() { }
 }

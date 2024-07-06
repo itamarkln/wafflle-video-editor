@@ -1,5 +1,5 @@
 import { VideoJsPlayer } from "video.js";
-import { IMediaPlayerActions } from "./actions/media-player-actions.interface";
+import { IMediaPlayerActions } from "./interfaces/media-player-actions.interface";
 
 export abstract class MediaPlayer implements IMediaPlayerActions {
     protected player!: VideoJsPlayer; // add | for more player types

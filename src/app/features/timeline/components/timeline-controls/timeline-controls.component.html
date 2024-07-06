@@ -1,19 +1,26 @@
 <div class="timeline__controls">
-  <div class="left">
+  <div class="timeline__controls_time">
+    <h5>Current Time: {{ currentTime }}</h5>
+  </div>
+
+  <div class="timeline__controls_main">
+    @if (!isPlaying) {
+    <button mat-icon-button>
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    } @else {
+    <button mat-icon-button>
+      <mat-icon>pause</mat-icon>
+    </button>
+    }
+  </div>
+
+  <div class="timeline__controls_secondary">
     <button mat-icon-button>
       <mat-icon>zoom_in</mat-icon>
     </button>
     <button mat-icon-button>
       <mat-icon>zoom_out</mat-icon>
-    </button>
-  </div>
-
-  <div class="right">
-    <button mat-icon-button>
-      <mat-icon>play_arrow</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon>pause</mat-icon>
     </button>
   </div>
 </div>

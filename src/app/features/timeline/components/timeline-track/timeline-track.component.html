@@ -1,25 +1,22 @@
 <div
   class="track"
   cdkDropList
-  #timelineTrack="cdkDropList"
-  [cdkDropListData]="track"
+  [cdkDropListData]="track.scenes"
   (cdkDropListDropped)="sceneDropped($event)"
 >
-  <div class="track__header">
-    <h4>{{ track.title }}</h4>
-  </div>
   <div class="track__content">
-    @for (source of track.sources; let i = $index; track i) {
+    @for (scene of track.scenes; let i = $index; track i) {
     <div
       class="track__item"
       cdkDrag
       [style]="{
-        'left.px': calculateTrackSourceLeftOffset(i),
-        'width.px': calculateTrackSourceWidth(source)
+        'left.px': calculateTrackSceneLeftOffset(i),
+        'width.px': calculateTrackSceneWidth(scene)
       }"
     >
-      {{ source.durationInS }}
+      {{ scene.durationInS }}
     </div>
+
     } @empty {
     <div>Empty tracks</div>
     }

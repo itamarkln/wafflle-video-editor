@@ -1,1 +1,9 @@
-<div class="cursor" [style]="{ 'left.px': calculateCursorPosition() }"></div>
+<div
+  class="cursor"
+  [style]="{ 'left.px': calculateCursorPosition() }"
+  cdkDrag
+  cdkDragBoundary="track"
+  cdkDragLockAxis="x"
+>
+  <div class="cursor__marker"></div>
+</div>

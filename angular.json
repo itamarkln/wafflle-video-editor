@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "allowedCommonJsDependencies": [
+              "lodash",
               "video.js",
               "@videojs/xhr",
               "global/document",

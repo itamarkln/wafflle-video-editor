@@ -1,7 +1,7 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, InputSignal, OutputEmitterRef, Signal, WritableSignal, computed, input, output, signal } from '@angular/core';
+import { Component, Input, OutputEmitterRef, output } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
-import { ISceneSource } from '@shared/entities/scene/scene-source.interface';
+import { ITrack } from '@shared/entities/track/track.interface';
 
 @Component({
   selector: 'app-timeline-track',
@@ -11,43 +11,43 @@ import { ISceneSource } from '@shared/entities/scene/scene-source.interface';
   styleUrl: './timeline-track.component.scss'
 })
 export class TimelineTrackComponent {
-  @Input() track!: IScene;
-  onTrackUpdated: OutputEmitterRef<IScene> = output<IScene>();
+  @Input() track!: ITrack;
+  onTrackUpdated: OutputEmitterRef<ITrack> = output<ITrack>();
 
   constructor() {
   }
 
   //#region track drag & drop
-  sceneDropped(event: CdkDragDrop<IScene>) {
-    this.handleTrackSourcesDropped(event);
+  sceneDropped(event: CdkDragDrop<IScene[]>) {
+    debugger
+    this.handleTrackSourceDropped(event);
     this.handleTrackSourcesRearranged(event);
     this.onTrackUpdated.emit(this.track);
   }
 
-  handleTrackSourcesDropped(event: CdkDragDrop<IScene>) {
+  handleTrackSourceDropped(event: CdkDragDrop<IScene[]>) {
     if (event.previousContainer !== event.container) {
-      const droppedSceneSources = event.previousContainer.data.sources;
-      [...this.track.sources, ...droppedSceneSources]; // adding at the end of the array
-      this.track.sources.splice(event.currentIndex, 0, ...droppedSceneSources);
+      const droppedScene = event.previousContainer.data[event.previousIndex];
+      this.track.scenes.splice(event.currentIndex, 0, droppedScene);
     }
   }
 
-  handleTrackSourcesRearranged(event: CdkDragDrop<IScene>) {
+  handleTrackSourcesRearranged(event: CdkDragDrop<IScene[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(this.track.sources, event.previousIndex, event.currentIndex);
+      moveItemInArray(this.track.scenes, event.previousIndex, event.currentIndex);
     }
   }
   //#endregion
 
   //#region track sources ui calculations
-  calculateTrackSourceWidth(source: ISceneSource): number {
-    return source.durationInS * 10;
+  calculateTrackSceneWidth(scene: IScene): number {
+    return scene.durationInS * 10;
   }
 
-  calculateTrackSourceLeftOffset(sourceIndex: number): number {
-    return this.track.sources.reduce((offset: number, source: ISceneSource, index: number) => {
+  calculateTrackSceneLeftOffset(sourceIndex: number): number {
+    return this.track.scenes.reduce((offset: number, scene: IScene, index: number) => {
       if (sourceIndex < index) {
-        offset += source.durationInS * 10;
+        offset += scene.durationInS * 10;
       }
       return offset
     }, 0);
