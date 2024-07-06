@@ -15,8 +15,10 @@ import { ScenesService } from './services/scenes.service';
 })
 export class ScenesComponent implements OnInit, OnDestroy {
   private _subscriptions: Subscription[];
+
   public scenes: IScene[];
   public playingScene?: IScene;
+
   public onScenePlay: OutputEmitterRef<IScene> = output<IScene>();
   public onScenePause: OutputEmitterRef<IScene> = output<IScene>();
 

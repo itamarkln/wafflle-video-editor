@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { Component, Input, InputSignal, OutputEmitterRef, input, output } from '@angular/core';
+import { Component, Input, InputSignal, OnInit, OutputEmitterRef, Signal, computed, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,14 +12,25 @@ import { IScene } from '@app/shared/entities/scene/scene.interface';
   templateUrl: './scene.component.html',
   styleUrl: './scene.component.scss'
 })
-export class SceneComponent {
-  @Input() public scene!: IScene;
-  @Input() public isPlaying: boolean;
-  public play: OutputEmitterRef<void> = output<void>();
-  public pause: OutputEmitterRef<void> = output<void>();
+export class SceneComponent implements OnInit {
+  totalDurationInS: number;
+
+  @Input() scene!: IScene;
+  @Input() isPlaying!: boolean;
+
+  play: OutputEmitterRef<void> = output<void>();
+  pause: OutputEmitterRef<void> = output<void>();
 
   constructor() {
-    this.isPlaying = false;
+    this.totalDurationInS = 0;
+  }
+
+  ngOnInit(): void {
+    this._setTotalDuration();
+  }
+
+  private _setTotalDuration() {
+    this.totalDurationInS = this.scene.sources.reduce((acc, source) => acc + source.durationInS, 0);
   }
 
   onPlay() {

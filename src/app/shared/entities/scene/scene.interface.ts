@@ -1,6 +1,7 @@
+import { ISceneSource } from "./scene-source.interface";
+
 export interface IScene {
     id: string;
     title: string;
-    url: string;
-    duration: number; // in seconds
+    sources: ISceneSource[];
 }
