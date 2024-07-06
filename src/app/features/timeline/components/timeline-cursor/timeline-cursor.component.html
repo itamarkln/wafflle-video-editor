@@ -1,6 +1,7 @@
 <div
   class="cursor"
-  [style]="{ 'left.px': currentPosition }"
+  [style.left.px]="currentPosition"
+  (window:resize)="calculateCursorPosition()"
   cdkDrag
   cdkDragBoundary="track"
   cdkDragLockAxis="x"

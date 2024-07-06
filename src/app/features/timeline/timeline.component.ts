@@ -24,9 +24,6 @@ import { TimelineService } from './services/timeline.service';
   styleUrl: './timeline.component.scss'
 })
 export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
-  isPlaying: boolean;
-  currentTime: number;
-
   timelineWidth: number;
   timelineTracks: ITrack[];
 
@@ -38,9 +35,6 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   public onTimelinePause: OutputEmitterRef<ITrack> = output<ITrack>();
 
   constructor(private timelineService: TimelineService) {
-    this.isPlaying = false;
-    this.currentTime = 0;
-
     this.timelineWidth = 0;
     this.timelineTracks = [];
 
@@ -53,11 +47,6 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
         this.timelineTracks = tracks;
       })
     );
-    this.subscriptions.push(
-      this.timelineService.currentTime$.subscribe(time => {
-        this.currentTime = time;
-      })
-    );
   }
 
   ngAfterViewInit(): void {
@@ -67,11 +56,11 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region timeline drag & drop
   sceneDropped(event: CdkDragDrop<IScene[]>) {
     const droppedScene = event.previousContainer.data[event.previousIndex];
-    const currTracks = this.timelineService.currentTracks;
+    const currTracks = this.timelineService.currentTracksValue;
 
     if (currTracks.length === 0) {
       const newTrack = this.createTrack(droppedScene);
-      this.timelineService.setTracks([...this.timelineService.currentTracks, newTrack]);
+      this.timelineService.setTracks([...this.timelineService.currentTracksValue, newTrack]);
     }
     // TODO: handle multiple tracks here
   }
@@ -87,7 +76,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleTrackUpdated(updatedTrack: ITrack) {
-    const updatedTracks = [...this.timelineService.currentTracks];
+    const updatedTracks = [...this.timelineService.currentTracksValue];
     const trackIndex = updatedTracks.findIndex(track => track.id === updatedTrack.id);
     if (trackIndex !== -1) {
       updatedTracks.splice(trackIndex, 1, updatedTrack);

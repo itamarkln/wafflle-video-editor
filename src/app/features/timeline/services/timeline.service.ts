@@ -11,11 +11,14 @@ export class TimelineService {
     private _tracksSubject = new BehaviorSubject<ITrack[]>([]);
     private _totalDurationSubject = new BehaviorSubject<number>(0);
     private _currentTimeSubject = new BehaviorSubject<number>(0);
+    private _isPlayingSubject = new BehaviorSubject<boolean>(false);
+
     private _timerEngine: TimerEngine;
 
     public tracks$ = this._tracksSubject.asObservable();
     public totalDuration$ = this._totalDurationSubject.asObservable();
     public currentTime$ = this._currentTimeSubject.asObservable();
+    public isPlaying$ = this._isPlayingSubject.asObservable();
 
     constructor() {
         this._timerEngine = new TimerEngine();
@@ -24,12 +27,20 @@ export class TimelineService {
         });
     }
 
-    public get currentTracks(): ITrack[] {
+    public get currentTracksValue(): ITrack[] {
         return this._tracksSubject.getValue();
     }
 
-    public get timelineTotalDuration(): number {
+    public get timelineTotalDurationValue(): number {
         return this._totalDurationSubject.getValue();
+    }
+
+    public get currentTimeValue(): number {
+        return this._currentTimeSubject.getValue();
+    }
+
+    public get isPlayingValue(): boolean {
+        return this._isPlayingSubject.getValue();
     }
 
     private calculateTotalDuration() {
@@ -52,15 +63,19 @@ export class TimelineService {
     }
 
     start() {
-        this._timerEngine.start();
+        const totalDuration = this._totalDurationSubject.getValue();
+        this._timerEngine.start(totalDuration);
+        this._isPlayingSubject.next(true);
     }
 
     pause() {
         this._timerEngine.pause();
+        this._isPlayingSubject.next(false);
     }
 
     reset() {
         this._timerEngine.reset();
         this._currentTimeSubject.next(0);
+        this._isPlayingSubject.next(false);
     }
 }

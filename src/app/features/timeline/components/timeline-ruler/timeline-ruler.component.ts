@@ -19,7 +19,7 @@ export class TimelineRulerComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[];
 
   constructor(private timelineService: TimelineService) {
-    this.totalDurationInS = signal(this.timelineService.timelineTotalDuration);
+    this.totalDurationInS = signal(this.timelineService.timelineTotalDurationValue);
     this.ticks = computed(() => Array(this.totalDurationInS()));
 
     this.subscriptions = [];

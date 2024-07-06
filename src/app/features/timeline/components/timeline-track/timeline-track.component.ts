@@ -58,7 +58,7 @@ export class TimelineTrackComponent implements OnInit, OnDestroy {
     this.track.scenes.splice(sceneIndex, 1);
 
     // update timeline tracks
-    const updatedTracks = [...this.timelineService.currentTracks];
+    const updatedTracks = [...this.timelineService.currentTracksValue];
     const trackIndex = updatedTracks.findIndex(track => track.id === this.track.id);
     if (trackIndex !== -1) {
       updatedTracks.splice(trackIndex, 1, this.track);

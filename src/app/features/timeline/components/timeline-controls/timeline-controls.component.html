@@ -1,15 +1,15 @@
 <div class="timeline__controls">
   <div class="timeline__controls_time">
-    <h5>Current Time: {{ currentTime }}</h5>
+    <h5>Current Time: {{ currentTime.toFixed(3) }}</h5>
   </div>
 
   <div class="timeline__controls_main">
     @if (!isPlaying) {
-    <button mat-icon-button>
+    <button mat-icon-button (click)="play()">
       <mat-icon>play_arrow</mat-icon>
     </button>
     } @else {
-    <button mat-icon-button>
+    <button mat-icon-button (click)="pause()">
       <mat-icon>pause</mat-icon>
     </button>
     }

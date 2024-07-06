@@ -11,11 +11,13 @@ import { Subscription } from 'rxjs';
   styleUrl: './timeline-cursor.component.scss'
 })
 export class TimelineCursorComponent implements OnInit, OnDestroy {
+  currentTime: number;
   currentPosition: number;
   subscriptions: Subscription[];
   @Input() timelineWidth!: number;
 
   constructor(private timelineService: TimelineService) {
+    this.currentTime = this.timelineService.currentTimeValue;
     this.currentPosition = 0;
     this.subscriptions = [];
   }
@@ -23,14 +25,17 @@ export class TimelineCursorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.timelineService.currentTime$.subscribe(time => {
-        this.calculateCursorPosition(time);
+        this.currentTime = time;
+        this.calculateCursorPosition();
       })
     );
   }
 
-  calculateCursorPosition(currentTime: number) {
+  calculateCursorPosition() {
     const pixelsPerSecond = this.timelineService.getPixelsPerSecond(this.timelineWidth);
-    this.currentPosition = currentTime * pixelsPerSecond;
+    const halfPixelsPerSecond = pixelsPerSecond / 2;
+    const calculatedPosition = this.currentTime * pixelsPerSecond - halfPixelsPerSecond;
+    calculatedPosition > 0 && (this.currentPosition = calculatedPosition);
   }
 
   ngOnDestroy(): void {
