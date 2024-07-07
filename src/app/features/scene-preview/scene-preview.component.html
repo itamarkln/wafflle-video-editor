@@ -3,6 +3,6 @@
     <h4>Preview</h4>
   </div>
   <div class="scene__preview__player">
-    <app-vjs-player></app-vjs-player>
+    <app-vjs-player (onPlay)="handleOnPlay()" (onPause)="handleOnPause()" (onEnd)="handleOnEnd()"></app-vjs-player>
   </div>
 </div>

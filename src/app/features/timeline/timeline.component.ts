@@ -85,8 +85,10 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region timeline controls actions
   handleTimelinePlay() {
     // TODO: enable playing all tracks together, now pick the first one
-    this.previewService.preview(this.timelineTracks[0].scenes);
-    this.timelineService.start();
+    if (this.timelineTracks.length > 0) {
+      this.previewService.preview(this.timelineTracks[0].scenes);
+      this.timelineService.start();
+    }
   }
 
   handleTimelinePause() {

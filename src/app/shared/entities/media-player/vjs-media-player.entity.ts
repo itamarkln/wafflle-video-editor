@@ -43,11 +43,24 @@ export class VjsMediaPlayer extends MediaPlayer {
         }
     }
 
+    public onPlay(playCallback: () => void) {
+        this.player.on('play', playCallback);
+    }
+
+    public onPause(pauseCallback: () => void) {
+        this.player.on('pause', pauseCallback);
+    }
+
+    public onEnded(endedCallback: () => void) {
+        this.player.on('ended', endedCallback);
+    }
+
+    //#region actions
     public load(source: videojs.Tech.SourceObject[]): void {
         try {
             if (this.player) {
                 console.log('loading src');
-                
+
                 if (source.length == 1) {
                     this.player.src(source[0].src);
                     return;
@@ -109,4 +122,5 @@ export class VjsMediaPlayer extends MediaPlayer {
             this.handleError(error);
         }
     }
+    //#endregion
 }

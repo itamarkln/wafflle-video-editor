@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, OutputEmitterRef, ViewChild, output } from '@angular/core';
 import { VjsMediaPlayer } from '@app/shared/entities/media-player/vjs-media-player.entity';
 import videojs, { VideoJsPlayerOptions } from 'video.js';
 
@@ -11,6 +11,11 @@ import videojs, { VideoJsPlayerOptions } from 'video.js';
 })
 export class VjsPlayerComponent implements OnInit, OnDestroy {
   private _player!: VjsMediaPlayer;
+
+  public onPlay: OutputEmitterRef<void> = output<void>();
+  public onPause: OutputEmitterRef<void> = output<void>();
+  public onEnd: OutputEmitterRef<void> = output<void>();
+
   @ViewChild('target', { static: true }) private _target!: ElementRef;
 
   constructor() { }
@@ -18,8 +23,13 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._player = new VjsMediaPlayer();
     this.init();
+
+    this._player.onPlay(() => this.onPlay.emit());
+    this._player.onPause(() => this.onPause.emit());
+    this._player.onEnded(() => this.onEnd.emit());
   }
 
+  //#region actions
   public init(options?: VideoJsPlayerOptions): void {
     this._player?.init(this._target.nativeElement, options);
   }
@@ -39,6 +49,7 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   public dispose(): void {
     this._player?.dispose();
   }
+  //#endregion
 
   ngOnDestroy() {
     this.dispose();

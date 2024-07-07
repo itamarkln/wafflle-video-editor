@@ -58,15 +58,23 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _isPreviewChanged(scenes: IScene[]): boolean {
-    return isEmpty(differenceWith(this._currentPreview, scenes, isEqual));
-  }
-
   private _convertToPlayerSource(scenes: IScene[]) {
     return scenes.map(scene => ({
       src: `${scene.url}?fm=hls`,
       type: 'application/x-mpegURL'
     }));
+  }
+
+  handleOnPlay() {
+    console.log('played');
+  }
+
+  handleOnPause() {
+    console.log('paused');
+  }
+
+  handleOnEnd() {
+    console.log('ended');
   }
 
   ngOnDestroy() {

@@ -40,17 +40,14 @@ export class TimelineControlsComponent implements OnInit, OnDestroy {
 
   play() {
     this.onTimelinePlay.emit();
-    // this.timelineService.start();
   }
 
   pause() {
     this.onTimelinePause.emit();
-    // this.timelineService.pause();
   }
 
   reset() {
     this.onTimelineReset.emit();
-    // this.timelineService.reset();
   }
 
   ngOnDestroy(): void {
