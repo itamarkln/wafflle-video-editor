@@ -1,5 +1,6 @@
 import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from 'video.js';
 import '@videojs/plugin-concat';
+import 'videojs-playlist';
 import { MediaPlayer } from './media-player.abstract.entity';
 
 export class VjsMediaPlayer extends MediaPlayer {
@@ -46,29 +47,32 @@ export class VjsMediaPlayer extends MediaPlayer {
         try {
             if (this.player) {
                 console.log('loading src');
-
+                
                 if (source.length == 1) {
                     this.player.src(source[0].src);
                     return;
                 }
 
-                const manifests = source.map(source => ({ url: source.src, mimeType: source.type }));
-                (this.player as any).concat({
-                    manifests,
-                    targetVerticalResolution: 720,
-                    callback: (err: any, result: any) => {
-                        if (err) {
-                            throw err;
-                        }
-                        console.log(result);
-                        this.player.src({
-                            src: `data:application/vnd.videojs.vhs+json,${JSON.stringify(
-                                result.manifestObject
-                            )}`,
-                            type: "application/vnd.videojs.vhs+json",
-                        });
-                    },
-                });
+                (this.player as any).playlist(source);
+                (this.player as any).playlist.autoadvance(0);
+
+                // const manifests = source.map(source => ({ url: source.src, mimeType: source.type }));
+                // (this.player as any).concat({
+                //     manifests,
+                //     targetVerticalResolution: 720,
+                //     callback: (err: any, result: any) => {
+                //         if (err) {
+                //             throw err;
+                //         }
+                //         console.log(result);
+                //         this.player.src({
+                //             src: `data:application/vnd.videojs.vhs+json,${JSON.stringify(
+                //                 result.manifestObject
+                //             )}`,
+                //             type: "application/vnd.videojs.vhs+json",
+                //         });
+                //     },
+                // });
             }
         } catch (error) {
             console.log('Entered load.func [catch]');

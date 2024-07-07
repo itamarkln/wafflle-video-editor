@@ -13,7 +13,7 @@ import { differenceWith, isEqual, isEmpty } from "lodash";
   styleUrl: './scene-preview.component.scss'
 })
 export class ScenePreviewComponent implements OnInit, OnDestroy {
-  private _scenesSubscription: Subscription | null;
+  private _previewSubscription: Subscription | null;
   private _actionSubscription: Subscription | null;
 
   private _currentPreview: IScene[];
@@ -21,21 +21,20 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
   @ViewChild(VjsPlayerComponent, { static: true }) private _vjsPlayer!: VjsPlayerComponent;
 
   constructor(private scenePreviewService: ScenePreviewService) {
-    this._scenesSubscription = null;
+    this._previewSubscription = null;
     this._actionSubscription = null;
     this._currentPreview = [];
   }
 
   ngOnInit(): void {
-    this.subscribeToCurrentScenes();
+    this.subscribeToCurrentPreview();
     this.subscribeToCurrentAction();
   }
 
-  subscribeToCurrentScenes() {
-    this._scenesSubscription = this.scenePreviewService.scenes$.subscribe((scenes: IScene[]) => {
+  subscribeToCurrentPreview() {
+    this._previewSubscription = this.scenePreviewService.preview$.subscribe((scenes: IScene[]) => {
       this._currentPreview = scenes;
-      const source = this._convertToPlayerSource(scenes);
-      this._vjsPlayer.load(source);
+      this.scenePreviewService.load();
     });
   }
 
@@ -47,6 +46,10 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
           break;
         case MediaPlayerActionType.PAUSE:
           this._vjsPlayer.pause();
+          break;
+        case MediaPlayerActionType.LOAD:
+          const source = this._convertToPlayerSource(this._currentPreview);
+          this._vjsPlayer.load(source);
           break;
         default:
           console.error('Unrecognized action');
@@ -66,17 +69,9 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
     }));
   }
 
-  play() {
-    this._vjsPlayer.play();
-  }
-
-  pause(scene?: IScene) {
-    this._vjsPlayer.pause();
-  }
-
   ngOnDestroy() {
     this._vjsPlayer.dispose();
-    this._scenesSubscription?.unsubscribe();
+    this._previewSubscription?.unsubscribe();
     this._actionSubscription?.unsubscribe();
   }
 }

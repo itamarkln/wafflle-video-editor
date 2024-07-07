@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, OutputEmitterRef, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TimelineService } from '@features/timeline/services/timeline.service';
@@ -16,6 +16,10 @@ export class TimelineControlsComponent implements OnInit, OnDestroy {
   isPlaying: boolean;
 
   subscriptions: Subscription[];
+
+  public onTimelinePlay: OutputEmitterRef<void> = output<void>();
+  public onTimelinePause: OutputEmitterRef<void> = output<void>();
+  public onTimelineReset: OutputEmitterRef<void> = output<void>();
 
   constructor(private timelineService: TimelineService) {
     this.isPlaying = this.timelineService.isPlayingValue;
@@ -35,15 +39,18 @@ export class TimelineControlsComponent implements OnInit, OnDestroy {
   }
 
   play() {
-    this.timelineService.start();
+    this.onTimelinePlay.emit();
+    // this.timelineService.start();
   }
 
   pause() {
-    this.timelineService.pause();
+    this.onTimelinePause.emit();
+    // this.timelineService.pause();
   }
 
   reset() {
-    this.timelineService.reset();
+    this.onTimelineReset.emit();
+    // this.timelineService.reset();
   }
 
   ngOnDestroy(): void {

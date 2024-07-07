@@ -1,35 +1,48 @@
 import { Injectable } from '@angular/core';
 import { MediaPlayerActionType } from '@shared/entities/media-player/actions/media-player-actions.enum';
 import { IScene } from '@shared/entities/scene/scene.interface';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScenePreviewService {
-  private _sceneSubject: Subject<IScene[]>;
-  private _currentActionSubject: Subject<MediaPlayerActionType>;
+  private _previewSubject: BehaviorSubject<IScene[]>;
+  private _currentActionSubject: BehaviorSubject<MediaPlayerActionType>;
 
-  public scenes$: Observable<IScene[]>;
+  public preview$: Observable<IScene[]>;
   public currentAction$: Observable<MediaPlayerActionType>;
 
   constructor() {
-    this._sceneSubject = new Subject<IScene[]>();
-    this._currentActionSubject = new Subject<MediaPlayerActionType>();
+    this._previewSubject = new BehaviorSubject<IScene[]>([]);
+    this._currentActionSubject = new BehaviorSubject<MediaPlayerActionType>(MediaPlayerActionType.PAUSE);
 
-    this.scenes$ = this._sceneSubject.asObservable();
+    this.preview$ = this._previewSubject.asObservable();
     this.currentAction$ = this._currentActionSubject.asObservable();
   }
 
-  public setScenes(scenes: IScene[]): void {
-    this._sceneSubject.next(scenes);
+  private _setPreview(scenes: IScene[]): void {
+    this._previewSubject.next(scenes);
   }
 
-  public play(): void {
+  private _play(): void {
     this._currentActionSubject.next(MediaPlayerActionType.PLAY);
   }
 
-  public pause(): void {
+  private _pause(): void {
     this._currentActionSubject.next(MediaPlayerActionType.PAUSE);
+  }
+
+  public load(): void {
+    this._currentActionSubject.next(MediaPlayerActionType.LOAD);
+  }
+
+  public preview(scenes: IScene[]) {
+    this._setPreview(scenes);
+    this._play();
+  }
+
+  public stopPreview() {
+    this._pause();
   }
 }

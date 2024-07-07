@@ -1,4 +1,5 @@
 export enum MediaPlayerActionType {
     PLAY = "PLAY",
-    PAUSE = "PAUSE"
+    PAUSE = "PAUSE",
+    LOAD = "LOAD"
 }

@@ -1,5 +1,9 @@
 <div class="timeline">
-  <app-timeline-controls></app-timeline-controls>
+  <app-timeline-controls
+    (onTimelinePlay)="handleTimelinePlay()"
+    (onTimelinePause)="handleTimelinePause()"
+    (onTimelineReset)="handleTimelineReset()"
+  ></app-timeline-controls>
 
   <div class="timeline__content">
     @if (timelineTracks.length > 0) {

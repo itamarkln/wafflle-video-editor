@@ -21,23 +21,23 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   }
 
   public init(options?: VideoJsPlayerOptions): void {
-    this._player.init(this._target.nativeElement, options);
+    this._player?.init(this._target.nativeElement, options);
   }
 
   public load(source: videojs.Tech.SourceObject[]): void {
-    this._player.load(source);
+    this._player?.load(source);
   }
 
   public play(): void {
-    this._player.play();
+    this._player?.play();
   }
 
   public pause(): void {
-    this._player.pause();
+    this._player?.pause();
   }
 
   public dispose(): void {
-    this._player.dispose();
+    this._player?.dispose();
   }
 
   ngOnDestroy() {

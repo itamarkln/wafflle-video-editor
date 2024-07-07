@@ -9,6 +9,7 @@ import { TimelineCursorComponent } from './components/timeline-cursor/timeline-c
 import { TimelineRulerComponent } from './components/timeline-ruler/timeline-ruler.component';
 import { TimelineTrackComponent } from './components/timeline-track/timeline-track.component';
 import { TimelineService } from './services/timeline.service';
+import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 
 @Component({
   selector: 'app-timeline',
@@ -31,10 +32,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('timeline') timelineEl!: ElementRef;
 
-  public onTimelinePlay: OutputEmitterRef<ITrack> = output<ITrack>();
-  public onTimelinePause: OutputEmitterRef<ITrack> = output<ITrack>();
-
-  constructor(private timelineService: TimelineService) {
+  constructor(private timelineService: TimelineService, private previewService: ScenePreviewService) {
     this.timelineWidth = 0;
     this.timelineTracks = [];
 
@@ -76,7 +74,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleTrackUpdated(updatedTrack: ITrack) {
-    const updatedTracks = [...this.timelineService.currentTracksValue];
+    const updatedTracks = [...this.timelineTracks];
     const trackIndex = updatedTracks.findIndex(track => track.id === updatedTrack.id);
     if (trackIndex !== -1) {
       updatedTracks.splice(trackIndex, 1, updatedTrack);
@@ -84,6 +82,25 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     this.timelineService.setTracks(updatedTracks);
   }
 
+  //#region timeline controls actions
+  handleTimelinePlay() {
+    // TODO: enable playing all tracks together, now pick the first one
+    this.previewService.preview(this.timelineTracks[0].scenes);
+    this.timelineService.start();
+  }
+
+  handleTimelinePause() {
+    this.previewService.stopPreview();
+    this.timelineService.pause();
+  }
+
+  handleTimelineReset() {
+    this.previewService.stopPreview();
+    this.timelineService.reset();
+  }
+  //#endregion
+
+  //#region ui related
   calculateTimelineWidth() {
     this.timelineWidth = this.timelineEl.nativeElement.clientWidth;
   }
@@ -92,6 +109,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   onResize(event: Event) {
     this.calculateTimelineWidth();
   }
+  //#endregion
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

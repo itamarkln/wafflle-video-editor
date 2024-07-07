@@ -29,14 +29,6 @@ export class ScenesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._handleSubscriptions();
-  }
-
-  private _handleSubscriptions(): void {
-    this._subscribeScenes();
-  }
-
-  private _subscribeScenes(): void {
     this._subscriptions.push(
       this.scenesService.getScenes().subscribe((scenes: IScene[]) => {
         this.scenes = scenes;

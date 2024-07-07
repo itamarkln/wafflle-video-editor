@@ -7,9 +7,11 @@
 >
 
 <div class="grid-container flex-between">
-  <app-scenes (onScenePlay)="handleScenePlay($event)" (onScenePause)="handleScenePause($event)"></app-scenes>
+  <app-scenes
+    (onScenePlay)="handleScenePlay($event)"
+    (onScenePause)="handleScenePause($event)"
+  ></app-scenes>
   <app-scene-preview #scenePreview></app-scene-preview>
 </div>
 
-<app-timeline (onTimelinePlay)="handleTimelinePlay($event)" (onTimelinePause)="handleTimelinePause($event)"
-></app-timeline>
+<app-timeline></app-timeline>
