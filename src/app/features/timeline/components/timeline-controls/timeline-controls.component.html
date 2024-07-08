@@ -5,21 +5,21 @@
 
   <div class="timeline__controls_main">
     @if (!isPlaying) {
-    <button mat-icon-button (click)="play()">
+    <button mat-icon-button (click)="play()" [disabled]="controlsDisabled()">
       <mat-icon>play_arrow</mat-icon>
     </button>
     } @else {
-    <button mat-icon-button (click)="pause()">
+    <button mat-icon-button (click)="pause()" [disabled]="controlsDisabled()">
       <mat-icon>pause</mat-icon>
     </button>
     }
   </div>
 
   <div class="timeline__controls_secondary">
-    <button mat-icon-button>
+    <button mat-icon-button [disabled]="controlsDisabled()">
       <mat-icon>zoom_in</mat-icon>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button [disabled]="controlsDisabled()">
       <mat-icon>zoom_out</mat-icon>
     </button>
   </div>

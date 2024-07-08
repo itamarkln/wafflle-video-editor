@@ -1,7 +1,8 @@
-import { Component, Input, OnDestroy, OnInit, OutputEmitterRef, output } from '@angular/core';
+import { Component, Input, InputSignal, OnDestroy, OnInit, OutputEmitterRef, Signal, computed, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TimelineService } from '@features/timeline/services/timeline.service';
+import { ITrack } from '@shared/entities/track/track.interface';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,6 +18,9 @@ export class TimelineControlsComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[];
 
+  timelineTracks: InputSignal<ITrack[]> = input.required<ITrack[]>();
+  controlsDisabled: Signal<boolean>;
+
   public onTimelinePlay: OutputEmitterRef<void> = output<void>();
   public onTimelinePause: OutputEmitterRef<void> = output<void>();
   public onTimelineReset: OutputEmitterRef<void> = output<void>();
@@ -25,6 +29,7 @@ export class TimelineControlsComponent implements OnInit, OnDestroy {
     this.isPlaying = this.timelineService.isPlayingValue;
     this.currentTime = this.timelineService.currentTimeValue;
     this.subscriptions = [];
+    this.controlsDisabled = computed(() => this.timelineTracks().length === 0);
   }
 
   ngOnInit(): void {
