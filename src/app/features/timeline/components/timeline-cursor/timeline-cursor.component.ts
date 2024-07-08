@@ -1,5 +1,6 @@
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 import { TimelineService } from '@features/timeline/services/timeline.service';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +17,7 @@ export class TimelineCursorComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[];
   @Input() timelineWidth!: number;
 
-  constructor(private timelineService: TimelineService) {
+  constructor(private timelineService: TimelineService, private previewService: ScenePreviewService) {
     this.currentTime = this.timelineService.currentTimeValue;
     this.currentPosition = 0;
     this.subscriptions = [];
@@ -24,7 +25,7 @@ export class TimelineCursorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.timelineService.currentTime$.subscribe(time => {
+      this.previewService.currentTime$.subscribe(time => {
         this.currentTime = time;
         this.calculateCursorPosition();
       })

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { VjsPlayerComponent } from '@app/shared/components/vjs-player/vjs-player.component';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { MediaPlayerActionType } from '@shared/entities/media-player/actions/media-player-actions.enum';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ScenePreviewService } from './services/scene-preview.service';
 import { differenceWith, isEqual, isEmpty } from "lodash";
 @Component({
@@ -15,7 +15,6 @@ import { differenceWith, isEqual, isEmpty } from "lodash";
 export class ScenePreviewComponent implements OnInit, OnDestroy {
   private _previewSubscription: Subscription | null;
   private _actionSubscription: Subscription | null;
-
   private _currentPreview: IScene[];
 
   @ViewChild(VjsPlayerComponent, { static: true }) private _vjsPlayer?: VjsPlayerComponent;
@@ -71,18 +70,22 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
 
   handleOnPlay() {
     console.log('played');
+    this.scenePreviewService.setIsPlaying(true);
   }
 
   handleOnPause() {
     console.log('paused');
+    this.scenePreviewService.setIsPlaying(false);
   }
 
   handleOnEnd() {
     console.log('ended');
+    this.scenePreviewService.setIsPlaying(false);
   }
 
   handleOnTimeUpdate(currentTime: number) {
     console.log('currentTime', currentTime);
+    this.scenePreviewService.setCurrentTime(currentTime);
   }
 
   ngOnDestroy() {

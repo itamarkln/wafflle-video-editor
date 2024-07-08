@@ -17,13 +17,14 @@ export class TimelineService {
 
     public tracks$ = this._tracksSubject.asObservable();
     public totalDuration$ = this._totalDurationSubject.asObservable();
-    public currentTime$ = this._currentTimeSubject.asObservable();
-    public isPlaying$ = this._isPlayingSubject.asObservable();
+    // public currentTime$ = this._currentTimeSubject.asObservable();
+    // public isPlaying$ = this._isPlayingSubject.asObservable();
 
     constructor() {
         this._timerEngine = new TimerEngine();
         this._timerEngine.onTick((elapsed: number) => {
-            this._currentTimeSubject.next(elapsed / 1000);
+            // this._currentTimeSubject.next(elapsed / 1000);
+            console.log('elapsed', elapsed);
         });
     }
 
