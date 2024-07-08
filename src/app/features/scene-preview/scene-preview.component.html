@@ -3,6 +3,14 @@
     <h4>Preview</h4>
   </div>
   <div class="scene__preview__player">
-    <app-vjs-player (onPlay)="handleOnPlay()" (onPause)="handleOnPause()" (onEnd)="handleOnEnd()"></app-vjs-player>
+    @if (!isPreview) {
+    <img class="scene__preview__player__emptyState" src="assets/emptyState.jpg" alt="emptyState" />
+    }
+    <app-vjs-player
+      (onPlay)="handleOnPlay()"
+      (onPause)="handleOnPause()"
+      (onEnd)="handleOnEnd()"
+      (onTimeUpdate)="handleOnTimeUpdate($event)"
+    ></app-vjs-player>
   </div>
 </div>

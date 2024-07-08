@@ -3,8 +3,19 @@
   width: 100%;
 
   .scene__preview__player {
+    position: relative;
     height: auto;
     width: 100%;
+
+    .scene__preview__player__emptyState {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 2;
+      border: 2px solid #4b4b4b;
+    }
   }
 }
 

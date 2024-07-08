@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, OutputEmitterRef, ViewChild, output } from '@angular/core';
 import { VjsMediaPlayer } from '@app/shared/entities/media-player/vjs-media-player.entity';
+
 import videojs, { VideoJsPlayerOptions } from 'video.js';
 
 @Component({
@@ -15,6 +16,7 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   public onPlay: OutputEmitterRef<void> = output<void>();
   public onPause: OutputEmitterRef<void> = output<void>();
   public onEnd: OutputEmitterRef<void> = output<void>();
+  public onTimeUpdate: OutputEmitterRef<number> = output<number>();
 
   @ViewChild('target', { static: true }) private _target!: ElementRef;
 
@@ -23,10 +25,14 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._player = new VjsMediaPlayer();
     this.init();
+    this._listenToEvent();
+  }
 
+  private _listenToEvent(): void {
     this._player.onPlay(() => this.onPlay.emit());
     this._player.onPause(() => this.onPause.emit());
     this._player.onEnded(() => this.onEnd.emit());
+    this._player.onTimeUpdate((currentTime: number) => this.onTimeUpdate.emit(currentTime));
   }
 
   //#region actions
@@ -34,8 +40,14 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
     this._player?.init(this._target.nativeElement, options);
   }
 
-  public load(source: videojs.Tech.SourceObject[]): void {
-    this._player?.load(source);
+  public async load(source: videojs.Tech.SourceObject[]): Promise<void> {
+    this._player?.load(source[0].src);
+    // if (source.length === 1) {
+    //   this._player?.load(source[0].src);
+    // } else {
+    //   const concatenatedBlob = await this.concatenateFiles(source.map(s => s.src));
+    //   this._player?.load(URL.createObjectURL(concatenatedBlob));
+    // }
   }
 
   public play(): void {

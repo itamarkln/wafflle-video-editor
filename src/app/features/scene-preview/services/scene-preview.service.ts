@@ -25,24 +25,16 @@ export class ScenePreviewService {
     this._previewSubject.next(scenes);
   }
 
-  private _play(): void {
-    this._currentActionSubject.next(MediaPlayerActionType.PLAY);
-  }
-
-  private _pause(): void {
-    this._currentActionSubject.next(MediaPlayerActionType.PAUSE);
-  }
-
-  public load(): void {
+  public loadPreview(): void {
     this._currentActionSubject.next(MediaPlayerActionType.LOAD);
   }
 
   public preview(scenes: IScene[]) {
     this._setPreview(scenes);
-    this._play();
+    this._currentActionSubject.next(MediaPlayerActionType.PLAY);
   }
 
   public stopPreview() {
-    this._pause();
+    this._currentActionSubject.next(MediaPlayerActionType.PAUSE);
   }
 }

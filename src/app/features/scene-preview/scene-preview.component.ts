@@ -18,12 +18,16 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
 
   private _currentPreview: IScene[];
 
-  @ViewChild(VjsPlayerComponent, { static: true }) private _vjsPlayer!: VjsPlayerComponent;
+  @ViewChild(VjsPlayerComponent, { static: true }) private _vjsPlayer?: VjsPlayerComponent;
 
   constructor(private scenePreviewService: ScenePreviewService) {
     this._previewSubscription = null;
     this._actionSubscription = null;
     this._currentPreview = [];
+  }
+
+  public get isPreview(): boolean {
+    return this._currentPreview.length > 0;
   }
 
   ngOnInit(): void {
@@ -34,22 +38,22 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
   subscribeToCurrentPreview() {
     this._previewSubscription = this.scenePreviewService.preview$.subscribe((scenes: IScene[]) => {
       this._currentPreview = scenes;
-      this.scenePreviewService.load();
+      this.scenePreviewService.loadPreview();
     });
   }
 
   subscribeToCurrentAction() {
-    this._actionSubscription = this.scenePreviewService.currentAction$.subscribe((action: MediaPlayerActionType) => {
+    this._actionSubscription = this.scenePreviewService.currentAction$.subscribe(async (action: MediaPlayerActionType) => {
       switch (action) {
         case MediaPlayerActionType.PLAY:
-          this._vjsPlayer.play();
+          this._vjsPlayer?.play();
           break;
         case MediaPlayerActionType.PAUSE:
-          this._vjsPlayer.pause();
+          this._vjsPlayer?.pause();
           break;
         case MediaPlayerActionType.LOAD:
           const source = this._convertToPlayerSource(this._currentPreview);
-          this._vjsPlayer.load(source);
+          await this._vjsPlayer?.load(source);
           break;
         default:
           console.error('Unrecognized action');
@@ -60,8 +64,8 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
 
   private _convertToPlayerSource(scenes: IScene[]) {
     return scenes.map(scene => ({
-      src: `${scene.url}?fm=hls`,
-      type: 'application/x-mpegURL'
+      src: `${scene.url}`,
+      type: 'video/mp4'
     }));
   }
 
@@ -77,8 +81,12 @@ export class ScenePreviewComponent implements OnInit, OnDestroy {
     console.log('ended');
   }
 
+  handleOnTimeUpdate(currentTime: number) {
+    console.log('currentTime', currentTime);
+  }
+
   ngOnDestroy() {
-    this._vjsPlayer.dispose();
+    this._vjsPlayer?.dispose();
     this._previewSubscription?.unsubscribe();
     this._actionSubscription?.unsubscribe();
   }

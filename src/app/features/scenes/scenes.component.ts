@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { SceneComponent } from './components/scene/scene.component';
 import { ScenesService } from './services/scenes.service';
+import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 
 @Component({
   selector: 'app-scenes',
@@ -19,10 +20,7 @@ export class ScenesComponent implements OnInit, OnDestroy {
   public scenes: IScene[];
   public playingScene?: IScene;
 
-  public onScenePlay: OutputEmitterRef<IScene> = output<IScene>();
-  public onScenePause: OutputEmitterRef<IScene> = output<IScene>();
-
-  constructor(private scenesService: ScenesService) {
+  constructor(private scenesService: ScenesService, private scenePreviewService: ScenePreviewService) {
     this._subscriptions = [];
     this.scenes = [];
     this.playingScene = undefined;
@@ -38,13 +36,13 @@ export class ScenesComponent implements OnInit, OnDestroy {
 
   handleScenePlay(scene: IScene) {
     this.playingScene = scene;
-    this.onScenePlay.emit(scene);
+    this.scenePreviewService.preview([scene]);
   }
 
   handleScenePause(scene: IScene) {
     if (this.playingScene === scene) {
       this.playingScene = undefined;
-      this.onScenePause.emit(scene);
+      this.scenePreviewService.stopPreview();
     }
   }
 

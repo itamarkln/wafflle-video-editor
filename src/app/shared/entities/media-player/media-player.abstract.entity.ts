@@ -6,7 +6,7 @@ export abstract class MediaPlayer implements IMediaPlayerActions {
     protected options!: object;
 
     abstract init(options?: object): void;
-    abstract load(sources: { src: string; type: string }[]): void;
+    abstract load(source: string): void;
     abstract play(): void;
     abstract pause(): void;
     abstract dispose(): void;

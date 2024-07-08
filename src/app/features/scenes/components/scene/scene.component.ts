@@ -1,9 +1,12 @@
 import { CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
-import { Component, Input, InputSignal, OnInit, OutputEmitterRef, Signal, computed, input, output } from '@angular/core';
+import { Component, Input, InputSignal, OnDestroy, OnInit, OutputEmitterRef, Signal, computed, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
+import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
+import { MediaPlayerActionType } from '@shared/entities/media-player/actions/media-player-actions.enum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-scene',
@@ -12,16 +15,22 @@ import { IScene } from '@app/shared/entities/scene/scene.interface';
   templateUrl: './scene.component.html',
   styleUrl: './scene.component.scss'
 })
-export class SceneComponent implements OnInit {
+export class SceneComponent implements OnInit, OnDestroy {
+  private _actionSubscription: Subscription | null;
+
   @Input() scene!: IScene;
   @Input() isPlaying!: boolean;
 
   play: OutputEmitterRef<void> = output<void>();
   pause: OutputEmitterRef<void> = output<void>();
 
-  constructor() { }
+  constructor(private previewService: ScenePreviewService) {
+    this._actionSubscription = null;
+  }
 
   ngOnInit(): void {
+    this._actionSubscription = this.previewService.currentAction$.subscribe(async (action: MediaPlayerActionType) => {
+    });
   }
 
   onPlay() {
@@ -30,5 +39,9 @@ export class SceneComponent implements OnInit {
 
   onPause() {
     this.pause.emit();
+  }
+
+  ngOnDestroy(): void {
+    this._actionSubscription?.unsubscribe();
   }
 }
