@@ -73,6 +73,10 @@ export class TimelineService {
         this._isPlayingSubject.next(false);
     }
 
+    updateCurrentTime(currentTime: number) {
+        this._currentTimeSubject.next(currentTime);
+    }
+
     reset() {
         this._timerEngine.reset();
         this._currentTimeSubject.next(0);
