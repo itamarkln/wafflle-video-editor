@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
-import { AppStateService } from '@app/shared/services/app-state.service';
+import { AppStateService } from '@core/services/app-state.service';
 
 interface MenuItem {
   icon: string;

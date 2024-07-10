@@ -1,6 +1,6 @@
 import { Component, Signal, computed } from '@angular/core';
 import { SIDENAV_CLOSED_WIDTH, SIDENAV_OPENED_WIDTH } from './core/constants/constants.data';
-import { AppStateService } from './shared/services/app-state.service';
+import { AppStateService } from './core/services/app-state.service';
 
 @Component({
   selector: 'app-root',
