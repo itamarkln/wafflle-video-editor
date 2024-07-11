@@ -1,6 +1,8 @@
+import { Playlist } from "./playlist.interface";
+
 export interface IMediaPlayerActions {
-    init(options?: object): void;
-    load(source: string): void;
+    init(options?: object, readyCallback?: () => void): void;
+    load(playlist: Playlist): void;
     play(): void;
     pause(): void;
     dispose(): void;

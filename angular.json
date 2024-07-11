@@ -53,6 +53,7 @@
             ],
             "scripts": [
               "./node_modules/video.js/dist/video.min.js",
+              "./node_modules/videojs-playlist/dist/videojs-playlist.min.js",
               "./node_modules/@videojs/plugin-concat/dist/videojs-plugin-concat.min.js"
             ],
             "vendorChunk": true,

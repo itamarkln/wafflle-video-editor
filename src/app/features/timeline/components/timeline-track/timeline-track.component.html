@@ -1,17 +1,17 @@
-<div
-  id="timeline-track"
-  class="track"
-  cdkDropList
-  [cdkDropListData]="track.scenes"
-  (cdkDropListDropped)="sceneDropped($event)"
->
-  <div class="track__content">
+<div class="track">
+  <div
+    id="timeline-track"
+    class="track__content"
+    cdkDropList
+    [cdkDropListData]="track.scenes"
+    (cdkDropListDropped)="sceneDropped($event)"
+  >
     @for (scene of track.scenes; let i = $index; track i) {
-    <app-timeline-track-item
+    <app-timeline-track-scene
       [scene]="scene"
       [timelineWidth]="timelineWidth"
-      (removeTrackItem)="handleRemoveTrackScene($event)"
-    ></app-timeline-track-item>
+      (removeTrackScene)="handleRemoveTrackScene($event)"
+    ></app-timeline-track-scene>
     } @empty {
     <div class="empty-state">
       <h5>Empty track</h5>

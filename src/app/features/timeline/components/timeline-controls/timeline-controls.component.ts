@@ -22,13 +22,13 @@ export class TimelineControlsComponent implements OnInit, OnDestroy {
   timelineTracks: InputSignal<ITrack[]> = input.required<ITrack[]>();
   controlsDisabled: Signal<boolean>;
 
-  public onTimelinePlay: OutputEmitterRef<void> = output<void>();
-  public onTimelinePause: OutputEmitterRef<void> = output<void>();
-  public onTimelineReset: OutputEmitterRef<void> = output<void>();
+  onTimelinePlay: OutputEmitterRef<void> = output<void>();
+  onTimelinePause: OutputEmitterRef<void> = output<void>();
+  onTimelineReset: OutputEmitterRef<void> = output<void>();
 
   constructor(private timelineService: TimelineService, private previewService: ScenePreviewService) {
-    this.isPlaying = this.timelineService.isPlayingValue;
-    this.currentTime = this.timelineService.currentTimeValue;
+    this.isPlaying = this.previewService.isPlayingValue;
+    this.currentTime = this.previewService.currentTimeValue;
     this.subscriptions = [];
     this.controlsDisabled = computed(() => this.timelineTracks().length === 0);
   }

@@ -43,6 +43,9 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(
       this.timelineService.tracks$.subscribe(tracks => {
         this.timelineTracks = tracks;
+      }),
+      this.timelineService.tracks$.subscribe(tracks => {
+        this.timelineTracks = tracks;
       })
     );
   }
@@ -58,7 +61,8 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (currTracks.length === 0) {
       const newTrack = this.createTrack(droppedScene);
-      this.timelineService.setTracks([...this.timelineService.currentTracksValue, newTrack]);
+      this.timelineService.setTracks([...currTracks, newTrack]);
+      this.previewService.load({ id: newTrack.id, scenes: newTrack.scenes });
     }
     // TODO: handle multiple tracks here
   }
@@ -74,10 +78,15 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleTrackUpdated(updatedTrack: ITrack) {
-    const updatedTracks = [...this.timelineTracks];
+    let updatedTracks = [...this.timelineTracks];
     const trackIndex = updatedTracks.findIndex(track => track.id === updatedTrack.id);
     if (trackIndex !== -1) {
-      updatedTracks.splice(trackIndex, 1, updatedTrack);
+      if (updatedTrack.scenes.length > 0) {
+        updatedTracks.splice(trackIndex, 1, updatedTrack);
+        this.previewService.load({ id: uuid(), scenes: updatedTrack.scenes });
+      } else {
+        updatedTracks = [];
+      }
     }
     this.timelineService.setTracks(updatedTracks);
   }
@@ -86,18 +95,18 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   handleTimelinePlay() {
     // TODO: enable playing all tracks together, now pick the first one
     if (this.timelineTracks.length > 0) {
-      this.previewService.preview(this.timelineTracks[0].scenes);
-      this.timelineService.start();
+      const track = this.timelineTracks[0];
+      this.previewService.load({ id: track.id, scenes: track.scenes });
+      this.previewService.play();
     }
   }
 
   handleTimelinePause() {
-    this.previewService.stopPreview();
-    this.timelineService.pause();
+    this.previewService.pause();
   }
 
   handleTimelineReset() {
-    this.previewService.stopPreview();
+    this.previewService.pause();
     this.timelineService.reset();
   }
   //#endregion

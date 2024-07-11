@@ -7,10 +7,10 @@
     <img class="scene__preview__player__emptyState" src="assets/emptyState.jpg" alt="emptyState" />
     }
     <app-vjs-player
-      (onPlay)="handleOnPlay()"
-      (onPause)="handleOnPause()"
-      (onEnd)="handleOnEnd()"
-      (onTimeUpdate)="handleOnTimeUpdate($event)"
+      (onPlayed)="handleOnPlayed()"
+      (onPaused)="handleOnPaused()"
+      (onEnded)="handleOnEnded()"
+      (onTimeUpdated)="handleOnTimeUpdated($event)"
     ></app-vjs-player>
   </div>
 </div>

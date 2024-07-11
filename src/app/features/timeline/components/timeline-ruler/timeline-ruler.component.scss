@@ -15,3 +15,29 @@
     text-align: center;
   }
 }
+
+::ng-deep mat-slider.mat-mdc-slider {
+  margin: 0;
+  width: 100%;
+
+  input {
+    left: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .mdc-slider__track--active_fill {
+    border-color: #4f4a55 !important;
+  }
+
+  .mdc-slider__thumb-knob,
+  .mdc-slider__thumb--focused .mdc-slider__thumb-knob {
+    background-color: #c0001f;
+    border-color: #c0001f;
+  }
+
+  .mat-ripple .mat-mdc-slider-focus-ripple,
+  .mat-ripple .mat-mdc-slider-active-ripple {
+    background-color: rgba(255, 171, 243, 0.05);
+  }
+}

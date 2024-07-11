@@ -1,16 +1,16 @@
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit, OutputEmitterRef, ViewChild, output } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { TimelineService } from '@features/timeline/services/timeline.service';
 import { TimelineComponent } from '@features/timeline/timeline.component';
 import { ITrack } from '@shared/entities/track/track.interface';
 import { Subscription } from 'rxjs';
-import { TimelineTrackItemComponent } from './timeline-track-item/timeline-track-item.component';
+import { TimelineTrackSceneComponent } from './timeline-track-scene/timeline-track-scene.component';
 
 @Component({
   selector: 'app-timeline-track',
   standalone: true,
-  imports: [DragDropModule, TimelineTrackItemComponent],
+  imports: [DragDropModule, TimelineTrackSceneComponent],
   templateUrl: './timeline-track.component.html',
   styleUrl: './timeline-track.component.scss'
 })
@@ -39,9 +39,9 @@ export class TimelineTrackComponent implements OnInit, OnDestroy {
   handleTrackSourceDropped(event: CdkDragDrop<IScene[]>) {
     if (event.previousContainer !== event.container) {
       const droppedScene = event.previousContainer.data[event.previousIndex];
-      this.track.scenes.push(droppedScene);
+      // this.track.scenes.push(droppedScene);
       // TODO: place the new scene in the correct position in it's track
-      // this.track.scenes.splice(event.currentIndex, 0, droppedScene);
+      this.track.scenes.splice(event.currentIndex, 0, droppedScene);
     }
   }
 
@@ -53,17 +53,9 @@ export class TimelineTrackComponent implements OnInit, OnDestroy {
   //#endregion
 
   handleRemoveTrackScene(scene: IScene) {
-    // remove scene from current track
     const sceneIndex = this.track.scenes.findIndex(trackScene => trackScene.id === scene.id);
     this.track.scenes.splice(sceneIndex, 1);
-
-    // update timeline tracks
-    const updatedTracks = [...this.timelineService.currentTracksValue];
-    const trackIndex = updatedTracks.findIndex(track => track.id === this.track.id);
-    if (trackIndex !== -1) {
-      updatedTracks.splice(trackIndex, 1, this.track);
-    }
-    this.timelineService.setTracks(updatedTracks);
+    this.onTrackUpdated.emit(this.track);
   }
 
   ngOnDestroy(): void {

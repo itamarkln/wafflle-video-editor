@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, OutputEmitterRef, ViewChild, output } from '@angular/core';
 import { VjsMediaPlayer } from '@app/shared/entities/media-player/vjs-media-player.entity';
+import { Playlist } from '@shared/entities/media-player/interfaces/playlist.interface';
 
 import videojs, { VideoJsPlayerOptions } from 'video.js';
 
@@ -13,41 +14,42 @@ import videojs, { VideoJsPlayerOptions } from 'video.js';
 export class VjsPlayerComponent implements OnInit, OnDestroy {
   private _player!: VjsMediaPlayer;
 
-  public onPlay: OutputEmitterRef<void> = output<void>();
-  public onPause: OutputEmitterRef<void> = output<void>();
-  public onEnd: OutputEmitterRef<void> = output<void>();
-  public onTimeUpdate: OutputEmitterRef<number> = output<number>();
+  public onPlayed: OutputEmitterRef<void> = output<void>();
+  public onPaused: OutputEmitterRef<void> = output<void>();
+  public onEnded: OutputEmitterRef<void> = output<void>();
+  public onTimeUpdated: OutputEmitterRef<number> = output<number>();
 
   @ViewChild('target', { static: true }) private _target!: ElementRef;
 
-  constructor() { }
+  constructor() {
+    this._player = new VjsMediaPlayer();
+  }
 
   ngOnInit(): void {
-    this._player = new VjsMediaPlayer();
     this.init();
-    this._listenToEvent();
+    // this._listenToEvent();
   }
 
   private _listenToEvent(): void {
-    this._player.onPlay(() => this.onPlay.emit());
-    this._player.onPause(() => this.onPause.emit());
-    this._player.onEnded(() => this.onEnd.emit());
-    this._player.onTimeUpdate((currentTime: number) => this.onTimeUpdate.emit(currentTime));
+    this._player.onPlayed(() => this.onPlayed.emit());
+    this._player.onPaused(() => this.onPaused.emit());
+    this._player.onEnded(() => this.onEnded.emit());
+    this._player.onTimeUpdated((currentTime: number) => this.onTimeUpdated.emit(currentTime));
   }
 
   //#region actions
   public init(options?: VideoJsPlayerOptions): void {
-    this._player?.init(this._target.nativeElement, options);
+    this._player?.init(this._target.nativeElement, options, () => {
+      this._listenToEvent();
+    });
   }
 
-  public async load(source: videojs.Tech.SourceObject[]): Promise<void> {
-    this._player?.load(source[0].src);
-    // if (source.length === 1) {
-    //   this._player?.load(source[0].src);
-    // } else {
-    //   const concatenatedBlob = await this.concatenateFiles(source.map(s => s.src));
-    //   this._player?.load(URL.createObjectURL(concatenatedBlob));
-    // }
+  public get currentTime(): number {
+    return this._player?.currentTime || 0;
+  }
+
+  public setCurrentTime(time: number): void {
+    this._player?.setCurrentTime(time);
   }
 
   public play(): void {
@@ -56,6 +58,18 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
 
   public pause(): void {
     this._player?.pause();
+  }
+
+  public load(playlist: Playlist): void {
+    this._player?.load(playlist);
+  }
+
+  public seek(time: number): void {
+    this._player?.seek(time);
+  }
+
+  public reset(): void {
+    this._player?.reset();
   }
 
   public dispose(): void {

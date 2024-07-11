@@ -18,12 +18,13 @@ export class TimelineCursorComponent implements OnInit, OnDestroy {
   @Input() timelineWidth!: number;
 
   constructor(private timelineService: TimelineService, private previewService: ScenePreviewService) {
-    this.currentTime = this.timelineService.currentTimeValue;
+    this.currentTime = this.previewService.currentTimeValue;
     this.currentPosition = 0;
     this.subscriptions = [];
   }
 
   ngOnInit(): void {
+    this.calculateCursorPosition();
     this.subscriptions.push(
       this.previewService.currentTime$.subscribe(time => {
         this.currentTime = time;
@@ -36,7 +37,9 @@ export class TimelineCursorComponent implements OnInit, OnDestroy {
     const pixelsPerSecond = this.timelineService.getPixelsPerSecond(this.timelineWidth);
     const halfPixelsPerSecond = pixelsPerSecond / 2;
     const calculatedPosition = this.currentTime * pixelsPerSecond - halfPixelsPerSecond;
-    calculatedPosition > 0 && (this.currentPosition = calculatedPosition);
+    if (calculatedPosition > 0) {
+      this.currentPosition = calculatedPosition;
+    }
   }
 
   ngOnDestroy(): void {

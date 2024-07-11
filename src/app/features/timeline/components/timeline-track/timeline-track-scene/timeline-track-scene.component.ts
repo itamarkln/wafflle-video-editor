@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit, OutputEmitterRef, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,13 +7,13 @@ import { IScene } from '@shared/entities/scene/scene.interface';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-timeline-track-item',
+  selector: 'app-timeline-track-scene',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule],
-  templateUrl: './timeline-track-item.component.html',
-  styleUrl: './timeline-track-item.component.scss'
+  imports: [DragDropModule, MatButtonModule, MatIconModule],
+  templateUrl: './timeline-track-scene.component.html',
+  styleUrl: './timeline-track-scene.component.scss'
 })
-export class TimelineTrackItemComponent implements OnInit, OnDestroy {
+export class TimelineTrackSceneComponent implements OnInit, OnDestroy {
   trackSceneWidth: number;
   trackSceneLeftOffset: number;
   subscriptions: Subscription[];
@@ -20,7 +21,7 @@ export class TimelineTrackItemComponent implements OnInit, OnDestroy {
   @Input() scene!: IScene;
   @Input() timelineWidth!: number;
 
-  removeTrackItem: OutputEmitterRef<IScene> = output<IScene>();
+  removeTrackScene: OutputEmitterRef<IScene> = output<IScene>();
 
   constructor(private timelineService: TimelineService) {
     this.trackSceneWidth = 0;
@@ -36,8 +37,8 @@ export class TimelineTrackItemComponent implements OnInit, OnDestroy {
     );
   }
 
-  handleRemoveTrackItem() {
-    this.removeTrackItem.emit(this.scene);
+  handleRemoveTrackScene() {
+    this.removeTrackScene.emit(this.scene);
   }
 
   //#region track sources ui calculations

@@ -12,7 +12,7 @@
     @for (scene of scenes; track scene.id) {
     <app-scene
       [scene]="scene"
-      [isPlaying]="playingScene?.id === scene.id"
+      [isPlaying]="playingSceneId === scene.id"
       (play)="handleScenePlay(scene)"
       (pause)="handleScenePause(scene)"
     ></app-scene>

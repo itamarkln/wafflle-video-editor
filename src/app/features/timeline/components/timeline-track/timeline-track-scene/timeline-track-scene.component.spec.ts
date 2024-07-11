@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimelineTrackItemComponent } from './timeline-track-item.component';
+import { TimelineTrackSceneComponent } from './timeline-track-scene.component';
 
 describe('TimelineTrackItemComponent', () => {
-  let component: TimelineTrackItemComponent;
-  let fixture: ComponentFixture<TimelineTrackItemComponent>;
+  let component: TimelineTrackSceneComponent;
+  let fixture: ComponentFixture<TimelineTrackSceneComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TimelineTrackItemComponent]
+      imports: [TimelineTrackSceneComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TimelineTrackItemComponent);
+    fixture = TestBed.createComponent(TimelineTrackSceneComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

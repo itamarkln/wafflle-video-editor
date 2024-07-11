@@ -1,8 +1,25 @@
 <div class="ruler">
-  @for (tick of ticks(); track i; let i = $index) {
+  @for (tick of ticks; track i; let i = $index) {
   <div class="tick">{{ i + 1 }}s</div>
   }
 </div>
-<!-- <mat-slider min="0" max="5" step="1" showTickMarks>
-  <input matSliderThumb />
+<!-- <mat-slider
+  class="timeline-slider"
+  min="sliderMinValue"
+  max="sliderMaxValue()"
+  step="sliderStepValue"
+  (change)="onSliderChange($event)"
+>
+  <input matSliderThumb [(ngModel)]="sliderCurrValue" #slider />
 </mat-slider> -->
+
+<mat-slider
+  ngDefaultControl
+  class="timeline-slider"
+  [min]="startTime"
+  [max]="endTime"
+  [step]="sliderStepValue"
+  (change)="onSliderChange($event)"
+>
+  <input matSliderThumb [(ngModel)]="currentTime" #slider />
+</mat-slider>

@@ -1,56 +1,68 @@
 import { Injectable } from '@angular/core';
-import { MediaPlayerActionType } from '@shared/entities/media-player/actions/media-player-actions.enum';
-import { IScene } from '@shared/entities/scene/scene.interface';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { IPreview } from '../interface/preview.entity';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScenePreviewService {
-  private _previewSubject: BehaviorSubject<IScene[]>;
-  private _currentActionSubject: BehaviorSubject<MediaPlayerActionType>;
-  private _currentTimeSubject: BehaviorSubject<number>;
-  private _isPlayingSubject: BehaviorSubject<boolean>;
+  private _previewSubject = new BehaviorSubject<IPreview | undefined>(undefined);
+  public preview$ = this._previewSubject.asObservable();
 
-  public preview$: Observable<IScene[]>;
-  public currentAction$: Observable<MediaPlayerActionType>;
-  public currentTime$: Observable<number>;
-  public isPlaying$: Observable<boolean>;
+  private _isPlayingSubject = new BehaviorSubject<boolean>(false);
+  public isPlaying$ = this._isPlayingSubject.asObservable();
 
-  constructor() {
-    this._previewSubject = new BehaviorSubject<IScene[]>([]);
-    this._currentActionSubject = new BehaviorSubject<MediaPlayerActionType>(MediaPlayerActionType.PAUSE);
-    this._currentTimeSubject = new BehaviorSubject<number>(0);
-    this._isPlayingSubject = new BehaviorSubject<boolean>(false);
+  private _loadSubject = new Subject<IPreview>();
+  public load$ = this._loadSubject.asObservable();
 
-    this.preview$ = this._previewSubject.asObservable();
-    this.currentAction$ = this._currentActionSubject.asObservable();
-    this.currentTime$ = this._currentTimeSubject.asObservable();
-    this.isPlaying$ = this._isPlayingSubject.asObservable();
+  private _resetSubject = new Subject<void>();
+  public reset$ = this._resetSubject.asObservable();
+
+  private _seekSubject = new BehaviorSubject<number>(0);
+  public seek$ = this._seekSubject.asObservable();
+
+  private _currentTimeSubject = new BehaviorSubject<number>(0);
+  public currentTime$ = this._currentTimeSubject.asObservable();
+
+  constructor() { }
+
+  public get currPreviewValue() {
+    return this._previewSubject.getValue();
   }
 
-  private _setPreview(scenes: IScene[]): void {
-    this._previewSubject.next(scenes);
+  public get isPlayingValue() {
+    return this._isPlayingSubject.getValue();
   }
 
-  public setIsPlaying(isPlaying: boolean): void {
-    this._isPlayingSubject.next(isPlaying);
+  public get currentTimeValue() {
+    return this._currentTimeSubject.getValue();
   }
 
-  public setCurrentTime(currentTime: number): void {
-    this._currentTimeSubject.next(currentTime);
+  play() {
+    this._isPlayingSubject.next(true);
   }
 
-  public loadPreview(): void {
-    this._currentActionSubject.next(MediaPlayerActionType.LOAD);
+  pause() {
+    this._isPlayingSubject.next(false);
   }
 
-  public preview(scenes: IScene[]) {
-    this._setPreview(scenes);
-    this._currentActionSubject.next(MediaPlayerActionType.PLAY);
+  load(preview: IPreview) {
+    this._loadSubject.next(preview);
+    this._previewSubject.next(preview);
+    // this.pause();
   }
 
-  public stopPreview() {
-    this._currentActionSubject.next(MediaPlayerActionType.PAUSE);
+  reset() {
+    this.pause();
+    this._resetSubject.next();
+    this._currentTimeSubject.next(0);
+  }
+
+  updateCurrentTime(time: number) {
+    this._currentTimeSubject.next(time);
+  }
+
+  seek(time: number) {
+    this._seekSubject.next(time);
   }
 }

@@ -9,6 +9,7 @@ import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 import { TimelineService } from '@features/timeline/services/timeline.service';
 import { ITrack } from '@shared/entities/track/track.interface';
+import { v4 as uuid } from "uuid";
 
 @Component({
   selector: 'app-video-editor',
@@ -25,13 +26,5 @@ import { ITrack } from '@shared/entities/track/track.interface';
   styleUrl: './video-editor.page.scss'
 })
 export class VideoEditorPageComponent {
-  constructor(private timelineService: TimelineService, private scenePreviewService: ScenePreviewService) { }
-
-  handleScenePlay(scene: IScene) {
-    this.scenePreviewService.preview([scene]);
-  }
-
-  handleScenePause(scene: IScene) {
-    this.scenePreviewService.stopPreview();
-  }
+  constructor() { }
 }

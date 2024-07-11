@@ -9,7 +9,7 @@
   <div class="timeline__content">
     @if (timelineTracks.length > 0) {
     <app-timeline-ruler [timelineTracks]="timelineTracks"></app-timeline-ruler>
-    <app-timeline-cursor [timelineWidth]="timelineWidth"></app-timeline-cursor>
+    <!-- <app-timeline-cursor [timelineWidth]="timelineWidth"></app-timeline-cursor> -->
     }
     <div #timeline class="timeline__content__tracks" cdkDropListGroup>
       @for (timelineTrack of timelineTracks; track timelineTrack.id) {
