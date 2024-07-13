@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { VjsPlayerComponent } from '@app/shared/components/vjs-player/vjs-player.component';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
+import { Playlist, PlaylistItem } from '@shared/entities/media-player/interfaces/playlist.interface';
 import { Subscription } from 'rxjs';
 import { IPreview } from './interface/preview.entity';
 import { ScenePreviewService } from './services/scene-preview.service';
-import { Playlist, PlaylistItem } from '@shared/entities/media-player/interfaces/playlist.interface';
 @Component({
   selector: 'app-scene-preview',
   standalone: true,
@@ -13,8 +13,6 @@ import { Playlist, PlaylistItem } from '@shared/entities/media-player/interfaces
   styleUrl: './scene-preview.component.scss'
 })
 export class ScenePreviewComponent implements OnInit, OnDestroy {
-  // private _previewSubscription: Subscription | null;
-  // private _actionSubscription: Subscription | null;
   private _currentPreview?: IPreview;
   private _subscriptions: Subscription[] = [];
 

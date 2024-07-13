@@ -39,7 +39,6 @@ export class TimelineTrackComponent implements OnInit, OnDestroy {
   handleTrackSourceDropped(event: CdkDragDrop<IScene[]>) {
     if (event.previousContainer !== event.container) {
       const droppedScene = event.previousContainer.data[event.previousIndex];
-      // this.track.scenes.push(droppedScene);
       // TODO: place the new scene in the correct position in it's track
       this.track.scenes.splice(event.currentIndex, 0, droppedScene);
     }

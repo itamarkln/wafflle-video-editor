@@ -1,6 +1,7 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, OutputEmitterRef, ViewChild, output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
+import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 import { ITrack } from '@shared/entities/track/track.interface';
 import { Subscription } from 'rxjs';
 import { v4 as uuid } from 'uuid';
@@ -9,7 +10,6 @@ import { TimelineCursorComponent } from './components/timeline-cursor/timeline-c
 import { TimelineRulerComponent } from './components/timeline-ruler/timeline-ruler.component';
 import { TimelineTrackComponent } from './components/timeline-track/timeline-track.component';
 import { TimelineService } from './services/timeline.service';
-import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 
 @Component({
   selector: 'app-timeline',
@@ -41,9 +41,6 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.timelineService.tracks$.subscribe(tracks => {
-        this.timelineTracks = tracks;
-      }),
       this.timelineService.tracks$.subscribe(tracks => {
         this.timelineTracks = tracks;
       })

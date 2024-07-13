@@ -1,10 +1,9 @@
-import { Component, InputSignal, OnDestroy, OnInit, WritableSignal, input, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 import { TimelineService } from '@features/timeline/services/timeline.service';
-import { ITrack } from '@shared/entities/track/track.interface';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,8 +21,6 @@ export class TimelineRulerComponent implements OnInit, OnDestroy {
   endTime: number;
 
   sliderStepValue: number;
-
-  timelineTracks: InputSignal<ITrack[]> = input.required<ITrack[]>();
 
   subscriptions: Subscription[];
 

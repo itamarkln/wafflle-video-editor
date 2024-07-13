@@ -1,4 +1,4 @@
-import { Component, Input, InputSignal, OnDestroy, OnInit, OutputEmitterRef, Signal, computed, input, output } from '@angular/core';
+import { Component, InputSignal, OnDestroy, OnInit, OutputEmitterRef, Signal, computed, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';

@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IScene } from '@shared/entities/scene/scene.interface';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { TimerEngine } from '../entities/timer-engine.entity';
 import { ITrack } from '@shared/entities/track/track.interface';
-import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,23 +8,11 @@ import { ScenePreviewService } from '@features/scene-preview/services/scene-prev
 export class TimelineService {
     private _tracksSubject = new BehaviorSubject<ITrack[]>([]);
     private _totalDurationSubject = new BehaviorSubject<number>(0);
-    private _updateTimeSubject = new Subject<number>();
-    private _isPlayingSubject = new BehaviorSubject<boolean>(false);
-
-    // private _timerEngine: TimerEngine;
 
     public tracks$ = this._tracksSubject.asObservable();
     public totalDuration$ = this._totalDurationSubject.asObservable();
-    public updateTime$ = this._updateTimeSubject.asObservable();
-    // public isPlaying$ = this._isPlayingSubject.asObservable();
 
-    constructor() {
-        // this._timerEngine = new TimerEngine();
-        // this._timerEngine.onTick((elapsed: number) => {
-        //     // this._currentTimeSubject.next(elapsed / 1000);
-        //     console.log('elapsed', elapsed);
-        // });
-    }
+    constructor() { }
 
     public get currentTracksValue(): ITrack[] {
         return this._tracksSubject.getValue();
@@ -37,11 +22,7 @@ export class TimelineService {
         return this._totalDurationSubject.getValue();
     }
 
-    public get isPlayingValue(): boolean {
-        return this._isPlayingSubject.getValue();
-    }
-
-    private calculateTotalDuration() {
+    private _calculateTotalDuration() {
         // the ruler ticks should be according to the track with the maximum total duration
         const totalDuration = this._tracksSubject.getValue().reduce((maxDurationInS, track) => {
             const trackDurationInS = track.scenes.reduce((durationInS, scene) => durationInS + scene.durationInS, 0);
@@ -52,7 +33,7 @@ export class TimelineService {
 
     setTracks(tracks: ITrack[]) {
         this._tracksSubject.next(tracks);
-        this.calculateTotalDuration();
+        this._calculateTotalDuration();
     }
 
     getPixelsPerSecond(timelineWidth: number): number {
@@ -60,24 +41,6 @@ export class TimelineService {
         return totalDuration ? timelineWidth / totalDuration : 0;
     }
 
-    // start() {
-    //     const totalDuration = this._totalDurationSubject.getValue();
-    //     this._timerEngine.start(totalDuration);
-    //     this._isPlayingSubject.next(true);
-    // }
-
-    // pause() {
-    //     this._timerEngine.pause();
-    //     this._isPlayingSubject.next(false);
-    // }
-
-    updateTime(currentTime: number) {
-        this._updateTimeSubject.next(currentTime);
-    }
-
     reset() {
-        // this._timerEngine.reset();
-        // this._currentTimeSubject.next(0);
-        // this._isPlayingSubject.next(false);
     }
 }

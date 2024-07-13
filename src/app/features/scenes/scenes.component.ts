@@ -1,13 +1,12 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit, OutputEmitterRef, output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IScene } from '@app/shared/entities/scene/scene.interface';
 import { Subscription } from 'rxjs';
-import { v4 as uuid } from "uuid";
 
+import { IPreview } from '@features/scene-preview/interface/preview.entity';
+import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
 import { SceneComponent } from './components/scene/scene.component';
 import { ScenesService } from './services/scenes.service';
-import { ScenePreviewService } from '@features/scene-preview/services/scene-preview.service';
-import { IPreview } from '@features/scene-preview/interface/preview.entity';
 
 @Component({
   selector: 'app-scenes',
@@ -48,17 +47,12 @@ export class ScenesComponent implements OnInit, OnDestroy {
   }
 
   handleScenePlay(scene: IScene) {
-    // this.playingScene = scene;
     this.previewService.load({ id: scene.id, scenes: [scene] });
     this.previewService.play();
   }
 
   handleScenePause(scene: IScene) {
-    // if (this.playingScene === scene) {
-    //   this.playingScene = undefined;
       this.previewService.pause();
-      // this.scenePreviewService.stopPreview();
-    // }
   }
 
   ngOnDestroy(): void {

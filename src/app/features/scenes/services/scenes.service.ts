@@ -17,7 +17,6 @@ export class ScenesService {
 
   public getScenes(): Observable<IScene[]> {
     // generate unique scenes ids
-
     return of(this._scenes)
       .pipe(map((scenes: IScene[]) => {
         return scenes.map((scene: IScene) => ({ ...scene, id: uuid() }))

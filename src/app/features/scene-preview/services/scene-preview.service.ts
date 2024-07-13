@@ -49,7 +49,6 @@ export class ScenePreviewService {
   load(preview: IPreview) {
     this._loadSubject.next(preview);
     this._previewSubject.next(preview);
-    // this.pause();
   }
 
   reset() {

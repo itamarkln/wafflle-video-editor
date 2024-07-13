@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, OutputEmitterRef, ViewChild, 
 import { VjsMediaPlayer } from '@app/shared/entities/media-player/vjs-media-player.entity';
 import { Playlist } from '@shared/entities/media-player/interfaces/playlist.interface';
 
-import videojs, { VideoJsPlayerOptions } from 'video.js';
+import { VideoJsPlayerOptions } from 'video.js';
 
 @Component({
   selector: 'app-vjs-player',

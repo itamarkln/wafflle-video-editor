@@ -190,8 +190,8 @@ export class VjsMediaPlayer extends MediaPlayer {
         } else {
             let accumulatedDuration = 0;
             for (let i = 0; i < this.playlistMetadata.length; i++) {
-                const seekToNextItem = time < accumulatedDuration + this._getPlaylistCurrentItemDuration(i);
-                if (seekToNextItem) {
+                const foundPlaylistItem = time < accumulatedDuration + this._getPlaylistCurrentItemDuration(i);
+                if (foundPlaylistItem) {
                     this._setPlaylistCurrentItem(i);
                     this.setCurrentTime(time - accumulatedDuration);
                     this.player.one('loadeddata', () => {
@@ -202,12 +202,6 @@ export class VjsMediaPlayer extends MediaPlayer {
                 accumulatedDuration += this._getPlaylistCurrentItemDuration(i);
             }
         }
-    }
-
-    private _calculateTotalDuration(): number {
-        return this.playlistMetadata.reduce((acc: number, item: PlaylistItem, i: number) => {
-            return acc + this._getPlaylistCurrentItemDuration(i);
-        }, 0);
     }
 
     private _calculateCurrentTime(): number {
